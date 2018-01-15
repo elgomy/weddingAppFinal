@@ -27,6 +27,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-view3.html">
 <link rel="lazy-import" href="my-view404.html">
 
+<!-- NEW IMPORTS -->
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+
 <dom-module id="my-app">
   <template>
     <style>
@@ -99,6 +103,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>My App</div>
           </app-toolbar>
+          <!-- Header menu -->
+          <paper-tabs selected="{{page}}" attr-for-selected="name">
+            <paper-tab name="view1">First tab</paper-tab>
+            <paper-tab name="view2">Tab two</paper-tab>
+            <paper-tab name="view3">Tab three</paper-tab>
+          </paper-tabs>
         </app-header>
 
         <iron-pages
