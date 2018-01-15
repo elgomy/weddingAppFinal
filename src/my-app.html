@@ -31,6 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 
+
 <dom-module id="my-app">
   <template>
     <style>
@@ -70,6 +71,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: black;
         font-weight: bold;
       }
+      
+      /* Media query */
+      @media (max-width: 600px){
+        .header-menu{
+          display: none
+        }
+      }
     </style>
 
     <app-location
@@ -104,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div main-title>My App</div>
           </app-toolbar>
           <!-- Header menu -->
-          <paper-tabs selected="{{page}}" attr-for-selected="name">
+          <paper-tabs class="header-menu" selected="{{page}}" attr-for-selected="name">
             <paper-tab name="view1">First tab</paper-tab>
             <paper-tab name="view2">Tab two</paper-tab>
             <paper-tab name="view3">Tab three</paper-tab>
@@ -123,6 +131,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
+   
+
   </template>
 
   <script>
