@@ -1,0 +1,93 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../mixins/input-validator.html">
+
+    <dom-module id="update-pass">
+      <!-- Optional shadow DOM template -->
+      <template>
+        <style>
+          /* CSS rules for your element */
+        </style>
+
+       		<div class="title">Do you want to update your pass?</div>
+
+          <paper-input 
+            id="passInput"
+            label="Password"
+            type="password" 
+            minlength="6"
+            value="{{user.pass}}"
+            required       
+            error-message="Invalid password">
+          </paper-input>
+
+          <paper-input 
+            id="newPassInput"
+            label="New password" 
+            type="password"
+            minlength="6" 
+            value="{{user.newPass}}"
+            required       
+            error-message="Invalid password">
+           </paper-input>    
+
+          <paper-button id="updatePass" raised on-tap="updatePass">Update pass</paper-button>
+
+      </template>
+
+      <script>
+        // Define the element's API using an ES2015 class
+        class updatePass extends inputValidator(Polymer.Element) {
+
+          static get is() { return 'update-pass'; }
+
+          // Declare properties for the element's public API
+          static get properties() {
+            return {
+              user: {
+                type: Object,
+                value(){
+                	return{
+                		pass:'',
+                		newPass:''
+                	}
+                }
+              },
+            
+            }
+          }
+
+             /**
+      * observer that is launched whenever the user text something in any input // any user Object property changes // mixin 'input-validator'
+      */
+          static get observers(){
+            return [
+            'clearInputError(user.*)'
+            ]
+          }
+
+            // envio de email para restablecimiento de contraseña
+     	updatePass(){
+          this.validator();
+          if(this.$.passInput.invalid == false && this.$.newPassInput.invalid == false){
+          this.dispatchEvent(new CustomEvent('change-pass', {bubbles:false, composed:true, detail:this.user}));
+          this.resetForm()
+        }
+      }
+      /**
+      * clear form inputs
+      */
+      resetForm(){
+        this.user = {
+          pass: '',
+          newPass: '',
+        }
+      }
+    }
+
+        // Register the x-custom element with the browser
+        window.customElements.define(updatePass.is, updatePass);
+      </script>
+
+    </dom-module>

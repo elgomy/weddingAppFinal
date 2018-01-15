@@ -1,0 +1,165 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../mixins/input-validator.html">
+
+<!--
+component with the register form
+
+@demo demo/index.html 
+-->
+
+<dom-module id="login-register">
+  <template>
+    <style>
+      :host {
+      @apply(--layout-flex);
+      
+      }
+
+       .inputs{
+        max-width: 400px;      
+        margin: auto
+      }
+
+      paper-input{
+        --paper-input-container-focus-color:var(--accent-color);
+        --paper-input-container-label:{
+              font-size: 0.85em;};
+      }
+
+      gold-email-input{
+        --paper-input-container-focus-color:var(--accent-color);
+        --paper-input-container-label:{
+              font-size: 0.85em;};
+      }
+
+       paper-button{
+        background: var(--accent-color);
+        color:white;
+        text-transform: capitalize;
+        border-radius: 25px;
+        padding: 7px
+      }
+
+    /*  :host([signed-in]) { /*condicional de estilo que nos permite que cuando el usuario se loguee el componente se haga invisible
+        opacity: 0;
+        pointer-events: none; 
+      } */
+
+       @media (max-width: 600px) { /* cambiarlo por min-width MOBILE FIRST
+        .inputs{
+            max-width: 325px;    
+            margin-left: 1px
+        }
+  </style>
+
+    <!-- REGISTER USER FORM -->
+    <div class=inputs>
+
+      <paper-input 
+        id="usernameInput"
+        label="User name" 
+        value="{{user.name}}"
+        required         
+        error-message="Please enter your user name">          
+      </paper-input>
+
+      <paper-input 
+        id="emailInput"
+        label="E-mail" 
+        type="email"
+        value="{{user.email}}" 
+        required        
+        error-message="Invalid email">
+      </paper-input>
+
+      <paper-input 
+        id="passInput"
+        label="Senha" 
+        type="password" 
+        minlength="6"
+        value="{{user.password}}"
+        required       
+        error-message="Invalid password">
+      </paper-input>
+
+      <paper-button raised on-tap="signUp">Create Account</paper-button>
+
+    </div>
+   
+  </template>
+
+  <script>
+
+     class LoginRegister extends inputValidator(Polymer.Element) {
+      static get is() { return 'login-register'; }
+      static get properties() {
+        return {
+          /**
+          * user data (register form)
+          * @type {Object}
+          */ 
+          user:{
+            type:Object,
+            notify:true,
+            value(){
+              return{
+                email:'', 
+                password:'',
+                name:''
+              }
+            }
+          },    
+          /**
+          * true when user is logged in 
+          * @type {Boolean}
+          */ 
+          signedIn: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: false
+          }
+        };
+      }
+      /**
+      * observer that is launched whenever the user text something in any input // any user Object property changes // mixin 'input-validator'
+      */
+      static get observers(){
+        return [
+            'clearInputError(user.*)'
+        ]
+      }  
+      /**
+      * user sign up
+      * dispatch register event listened by the component <login-admin>
+      * this.validator() // input-validator mixin
+      */
+      signUp(){
+
+      //  if(!this.user.name || !this.user.email || !this.user.password )
+        this.validator();
+        if(this.$.usernameInput.invalid == false && this.$.emailInput.invalid == false && this.$.passInput.invalid == false ){
+                this.dispatchEvent(new CustomEvent('register', {bubbles:true, composed:true, detail:this.user}));
+        this.resetForm()
+
+        }     
+      }
+      /**
+      * clear register form inputs
+      */
+      resetForm(){
+        this.user = {
+          email: '',
+          password: '',
+          name: ''
+        }
+      }
+     
+    }
+
+    window.customElements.define(LoginRegister.is, LoginRegister);
+
+  </script>
+</dom-module>

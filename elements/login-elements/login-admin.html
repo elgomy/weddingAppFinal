@@ -1,0 +1,229 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<!-- iron elements-->
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<!-- paper elements-->
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner-lite.html">
+<!-- login elements-->
+<link rel="import" href="login-signin.html">
+<link rel="import" href="login-register.html">
+<link rel="import" href="login-social.html">
+<!-- mixins -->
+<link rel="import" href="../mixins/firelogin-error.html">
+<link rel="import" href="../mixins/saveprofile-firebase.html">
+<link rel="import" href="../mixins/launch-toast.html">
+
+<!--
+`login-admin`
+ user login, signup with Firebase (save user data into Firebase)
+@demo demo/index.html 
+-->
+
+<dom-module id="login-admin">
+  <template>
+    <style>
+      :host {
+        
+      } 
+
+      img{
+        width: 35px; /* mejor usar los tamaños viewport */
+        height: 35px;
+      }   
+
+      paper-tab{
+        font-family: "Averta","Avenir W02","Avenir",Helvetica,Arial,sans-serif;font-size: 1.5em;
+        --paper-tab-ink:var(--accent-color);                   
+      }
+
+      paper-tabs{
+        
+        --paper-tabs-selection-bar-color:var(--accent-color);
+        --paper-tabs-selection-bar:{
+          color:red;
+        }
+        --paper-tabs:{
+          
+          margin-top: 1px
+        }
+      }
+
+ 
+
+    </style>
+
+    <!-- Polymerfire component to authenticate users -->
+    <firebase-auth 
+            app-name="wedding-app"
+            id="auth" 
+            user="{{firebaseUser}}" 
+            signed-in="{{signed}}"
+            app="{{fbapp}}">
+   </firebase-auth>
+
+     <!-- USER LOGIN / SIGN UP -->
+    
+      <paper-tabs align-bottom selected="{{signSect}}" attr-for-selected="name">
+        <paper-tab name="signin">Log In</paper-tab>
+        <paper-tab name="register">Sign Up</paper-tab>
+      </paper-tabs>
+   
+      <iron-pages selected="{{signSect}}" attr-for-selected="name">
+            
+        <div name="signin" class="signin">
+          <paper-spinner-lite id="loginSpinner"></paper-spinner-lite>
+          <login-signin 
+              on-email-signin="emailSignIn"
+              signed-in="[[signed]]">
+          </login-signin>          
+        <!--  
+          <login-social 
+              fbapp="{{fbapp}}"
+              on-sign-social="signSocial">
+          </login-social>  -->
+        </div>
+
+        <div name="register">
+          <paper-spinner-lite id="registerSpinner"></paper-spinner-lite>
+          
+
+          <login-register 
+              on-register="signUp" 
+              signed-in="[[signed]]">
+          </login-register>
+        </div>
+
+      
+   
+    </iron-pages>
+          
+  </template>
+
+  <script>
+
+
+  class LoginAdmin extends FireloginError(SaveprofileFirebase(LaunchToast(Polymer.Element))){
+      static get is() { return 'login-admin'; }
+      static get properties() {
+        return {
+          /**
+          * Firebase user data
+          * @type {Object}
+          */
+          user:Object,  
+
+          /**
+          * binded property which links with the property 'SignedIn' of the component <firebase-auth>, returning 'true' when the user is authenticated
+          * @type {Boolean}
+          */    
+          signed: {
+            type: Boolean,
+            reflectToAttribute: true,
+            value: true,
+            notify:true
+          }, 
+
+          /**
+          * binded property which links with the property 'SignedIn' of the component <firebase-auth>, returning 'true' when the user is authenticated
+          * @type {Boolean}
+          */
+          signSect: {
+            type:String,
+            value: 'signin'
+          },          
+          /**
+          * access to Firebase services: -firebase.auth(); -firebase.database(); -firebase.storage(). If we have problems to access Firebase services with Polymerfire, whe can access those services with this object
+          * @type {Object}
+          */
+          fbapp:Object,
+        
+        }
+      }   
+
+     
+
+        /**
+          * user sign up
+          * launch toast
+          * dispatch close login event to close the dialog // <my-app>
+          * launch login error // mixin firelogin-error
+          * save user data into Firebase
+          * @param {e} receive user email and user password through e.detail property // <login-register>
+          */
+      signUp(e){
+          if (this.user){
+              this.launchNegativeToast('User already exists')
+              return false;
+          }
+          this.$.registerSpinner.active = true
+          this.$.auth.createUserWithEmailAndPassword(e.detail.email, e.detail.password)
+              .catch((error)=>{
+                this.$.registerSpinner.active = false; 
+                this.errorCode(error)
+              }) 
+              .then((user)=>{   
+                  this.$.registerSpinner.active = false;                     
+                  this.saveProfile(user,e.detail); 
+                  this.launchPositiveToast('Hello!!');
+                  this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true}))                              
+              });
+
+      } 
+     
+       /**
+          * user sign in with email / pass
+          * launch toast
+          * dispatch close login event to close the dialog // <my-app>
+          * launch login error // mixin firelogin-error
+          * @param {e} receive user email and user password through e.detail property // <login-signin>
+          */
+   
+      emailSignIn(e){       
+           if (this.user){
+                this.launchNegativeToast('You are already logged in')
+                return false;
+          } 
+          this.$.loginSpinner.active = true;
+          this.$.auth.signInWithEmailAndPassword(e.detail.email, e.detail.password)
+              .catch((error)=>{
+                this.$.loginSpinner.active = false; 
+                this.errorCode(error)
+              })
+              .then((result)=>{
+                  if (result){
+                      this.$.loginSpinner.active = false; 
+                      this.launchPositiveToast('Hello!!') ;
+                      this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true})) 
+                  }   
+              });
+      }
+
+        /**
+          * user sign in with Facebook / Google
+          * launch toast
+          * dispatch close login event to close the dialog // <my-app>
+          * launch login error // mixin firelogin-error
+          * @param {e} receive user email and user password through e.detail property // <login-social>
+          */
+
+      signSocial(e){
+            if (this.user){
+                this.launchNegativeToast('You are already logged in')
+                return false;
+            }  
+            this.fbapp.auth().signInWithPopup(e.detail).then((result)=>{    
+                this.saveProfile(result.user);  
+                  this.launchPositiveToast('Hello!!');  
+                  this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true}));                  
+              }, (error)=>this.errorCode(error));  
+        }
+     
+  }
+
+  window.customElements.define(LoginAdmin.is, LoginAdmin);
+
+
+
+  </script>
+</dom-module>

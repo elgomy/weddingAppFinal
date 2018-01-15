@@ -1,0 +1,30 @@
+<script>
+
+    /**
+    * Mixin to store user data into Firebase. 
+    * We need the object fbapp returned by the property 'app' of the component <firebase-auth> (Polymerfire)
+    * this.addEventListener('negativeToast', e => this._openNegativeToast(e));
+    *   <firebase-auth 
+            app-name="mask-polymerfire"
+            app="{{fbapp}}">
+        </firebase-auth>  
+    * @param {user}, returned by the promise gerated after calling the Firebase method signInWithPopup()
+    * @param {data}, returned by the promise gerated after calling the Firebase method createUserWithEmailAndPassword() 
+    */
+
+     SaveprofileFirebase = (superClass)=>{
+        return class extends superClass{
+
+          saveProfile(user,data){  
+              this.fbapp.database().ref('/users/' + user.uid).set({
+                nombre: user.providerData[0].displayName || data.name || 'unknown name', 
+                email: user.email || 'no-email@example.com',
+                photoURL: user.providerData[0].photoURL || 'http://lucialiu.me/images/portfolio/tastemap/profile-icon.png'
+              });      
+            }
+        }
+     
+    }
+
+  </script>
+

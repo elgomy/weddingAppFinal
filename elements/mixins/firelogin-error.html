@@ -1,0 +1,63 @@
+  <script>
+
+        /**
+    * Mixin to launch the 'toast' with the Firebase error messages
+    * @param {error}, returned by Firebase authentication system
+    */
+
+     FireloginError = (superClass)=>{
+        return class extends superClass{
+
+          errorCode(error){
+              switch (error.code){
+                case 'auth/provider-already-linked' || 'auth/credential-already-in-use':
+                var message = 'Social provider already';
+                this.fireEvent(message)
+                break
+                case 'auth/invalid-credential':
+                var message = 'Expired credential';
+                this.fireEvent(message)
+                break
+                case 'auth/email-already-in-use':
+                var message = 'E-mail already in use';
+                this.fireEvent(message)
+                break
+                case 'auth/invalid-email' || 'auth/wrong-password':
+                var message = 'Invalid e-mail or pass';
+                this.fireEvent(message)
+                break
+                case 'auth/wrong-password':
+                var message = 'Invalid e-mail or pass';
+                this.fireEvent(message)
+                break
+                case 'auth/weak-password':
+                var message = 'Password must have at least 6 characters';
+                this.fireEvent(message)
+                break        
+                case 'auth/user-disabled':
+                var message = 'User not authorized';
+                this.fireEvent(message)
+                break
+                case 'auth/user-not-found':
+                var message = 'User not found';
+                this.fireEvent(message)
+                break
+                case 'auth/argument-error':
+                var message = 'Invalid e-mail';
+                this.fireEvent(message)
+                break                     
+              }
+          } 
+
+        fireEvent(message){
+          this.dispatchEvent(new CustomEvent('negativeToast',{bubbles:true, composed:true, detail:message}))
+        }
+
+      }
+     
+    }
+
+ 
+
+  </script>
+

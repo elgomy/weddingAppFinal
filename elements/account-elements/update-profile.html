@@ -1,0 +1,90 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../mixins/input-validator.html">
+
+    <dom-module id="update-profile">
+      <!-- Optional shadow DOM template -->
+      <template>
+        <style>
+          /* CSS rules for your element */
+        </style>
+
+       		<div class="title">Do you want to update your profile?</div>
+
+          <paper-input 
+            id="usernameInput"
+            label="User" 
+            value="{{user.name}}">
+          </paper-input>
+
+             <paper-input 
+          id="passInput"
+          label="Password" 
+          type="password" 
+          minlength="6"
+          value="{{user.pass}}"
+          required       
+          error-message="Invalid password">
+        </paper-input>
+              
+          <paper-button id="updatePass" raised on-tap="update">Update profile</paper-button>
+
+      </template>
+
+      <script>
+        // Define the element's API using an ES2015 class
+        class updateProfile extends inputValidator(Polymer.Element) {
+
+          static get is() { return 'update-profile'; }
+
+          // Declare properties for the element's public API
+          static get properties() {
+            return {
+              user: {
+                type: Object,
+                value(){
+                	return{
+                		name:'',
+                		pass:''
+                	}
+                }
+              },
+            
+            }
+          }
+
+             /**
+      * observer that is launched whenever the user text something in any input // any user Object property changes // mixin 'input-validator'
+      */
+          static get observers(){
+            return [
+            'clearInputError(user.*)'
+            ]
+          }
+
+            // envio de email para restablecimiento de contraseña
+     	update(){
+        this.validator();
+        if(this.$.passInput.invalid == false && this.$.usernameInput.invalid == false){
+        this.dispatchEvent(new CustomEvent('change-profile', {bubbles:false, composed:true, detail:this.user}));
+        this.resetForm()
+      }
+    }
+             /**
+      * clear form inputs
+      */
+      resetForm(){
+        this.user = {
+          pass: '',
+          name: ''
+        }
+      }     
+
+    }
+
+        // Register the x-custom element with the browser
+        window.customElements.define(updateProfile.is, updateProfile);
+      </script>
+
+    </dom-module>

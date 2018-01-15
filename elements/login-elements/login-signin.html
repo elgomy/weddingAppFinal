@@ -1,0 +1,144 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../mixins/input-validator.html">
+
+<dom-module id="login-signin">
+  <template>
+    <style>
+      :host {
+            
+        left: 0;
+        right: 0;
+        bottom: 0;
+       
+       /* background-color: var(--paper-indigo-a200); */
+       
+      }
+
+    /*  :host([signed-in]) { /*condicional de estilo que nos permite que cuando el usuario se loguee el componente se haga invisible
+        opacity: 0;
+        pointer-events: none; 
+      } */
+
+       paper-button{
+      @apply --accent-color;
+
+        color:white;
+        text-transform: capitalize;
+        width: 160px;
+        padding: 7px;
+        margin-top: 25px;
+        
+      }
+   
+      img{
+      height: 40px;
+      width: 40px;
+      } 
+
+    .inputs{
+        max-width: 400px;      
+        margin: auto
+      }
+
+      paper-input{
+        --paper-input-container-focus-color:var(--accent-color);
+        --paper-input-container-label:{
+              font-size: 0.85em;};     
+      }
+
+       </style>
+          
+      <!-- SIGN FORM -->
+
+    <div class="inputs">
+
+      <paper-input 
+        id="emailInput"   
+        label="E-mail" 
+        type="email"
+        required        
+        error-message="Invalid email"
+        value="{{user.email}}">
+      </paper-input>
+
+      <paper-input 
+        id="passInput"
+        label="Password"
+        type="password" 
+        required 
+        minlength="6"
+        required       
+        error-message="Invalid password"
+        value="{{user.password}}">
+      </paper-input>
+   
+    <paper-button id="signButton" raised on-tap="signEmail">Vaaamooosss</paper-button>
+
+    </div>
+ 
+  </template>
+
+  <script>
+
+    class LoginSignin extends inputValidator(Polymer.Element){
+      static get is() { return 'login-signin' } 
+      static get properties() {
+        return {
+            
+          /**
+          * user data (sign in form)
+          * @type {Object}
+          */ 
+            user:{
+              type: Object,
+              notify: true,
+              value(){
+                return{
+                  email:'',
+                  password:''
+                }
+              }
+            } 
+        }
+      }
+
+      /**
+      * observer that is launched whenever the user text something in any input // any user Object property changes // mixin 'input-validator'
+      */
+      static get observers(){
+        return [
+            'clearInputError(user.*)'
+        ]
+      } 
+       /**
+      * user sign in
+      * validator() // input-validator mixin
+      * dispatch email-signin event listened by the component <login-admin>
+      */
+      signEmail(){
+        this.validator();
+        if(this.$.emailInput.invalid == false && this.$.passInput.invalid == false ){
+        this.dispatchEvent(new CustomEvent('email-signin',{bubbles:true, composed:true, detail: this.user}));
+        this.resetForm();
+        }
+      }
+       /**
+      * clear sign in form inputs
+      */
+      resetForm(){
+        this.user = {
+          email: '',
+          password: ''
+        }
+      }
+
+
+    }
+
+    window.customElements.define(LoginSignin.is,LoginSignin)
+
+  </script>
+</dom-module>

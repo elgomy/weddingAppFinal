@@ -1,0 +1,95 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+
+<link rel="import" href="../mixins/input-validator.html">
+
+    <dom-module id="update-email">
+      <!-- Optional shadow DOM template -->
+      <template>
+        <style>
+          /* CSS rules for your element */
+        </style>
+
+       		<div class="title">Do you want to update your e-mail?</div>
+
+          <paper-input 
+            id="emailInput"
+            label="New e-mail"
+            type="email"  
+            value="{{user.email}}"
+            required
+            error-message="invalid email">   
+          </paper-input>
+
+          <paper-input 
+            id="passInput"
+            label="Password" 
+            type="password"
+            minlength="6" 
+            value="{{user.pass}}"
+            required       
+            error-message="Invalid password">
+          </paper-input>
+
+          <paper-button raised on-tap="updateEmail">Update e-mail</paper-button>
+
+      </template>
+
+      <script>
+        // Define the element's API using an ES2015 class
+        class updateEmail extends inputValidator(Polymer.Element) {
+
+          static get is() { return 'update-email'; }
+
+          // Declare properties for the element's public API
+          static get properties() {
+            return {
+              user: {
+                type: Object,
+                value(){
+                	return{
+                		email:'',
+                		pass:''
+                		
+                	}
+                }
+              },
+            
+            }
+          }
+
+               /**
+      * observer that is launched whenever the user text something in any input // any user Object property changes // mixin 'input-validator'
+      */
+          static get observers(){
+            return [
+            'clearInputError(user.*)'
+            ]
+          }
+
+            // envio de email para restablecimiento de contraseña
+     	updateEmail(){
+        this.validator();
+            if(this.$.emailInput.invalid == false && this.$.passInput.invalid  == false){
+        this.dispatchEvent(new CustomEvent('change-email', {bubbles:false, composed:true, detail:this.user}));
+        this.resetForm()
+          }
+      }
+            /**
+      * clear form inputs
+      */
+      resetForm(){
+        this.user = {
+          pass: '',
+          email: ''
+        }
+      }
+       
+
+    }
+
+        // Register the x-custom element with the browser
+        window.customElements.define(updateEmail.is, updateEmail);
+      </script>
+
+    </dom-module>

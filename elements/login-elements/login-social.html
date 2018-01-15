@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+
+
+<link rel="import" href="../mixins/firelogin-error.html">
+
+<dom-module id="login-social">
+  <template>
+    <style>
+       :host {
+        
+       
+       /* background-color: var(--paper-indigo-a200); */
+         
+    
+      }
+
+    /*  :host([signed-in]) { /*condicional de estilo que nos permite que cuando el usuario se loguee el componente se haga invisible
+        opacity: 0;
+        pointer-events: none; 
+      } */ 
+      paper-button{
+        height: 30px;
+        width: 30px;
+        
+      }
+
+      img{
+        height: 30px;
+        width: 30px;
+      } 
+
+      .socialButton{
+        margin-top:10px;
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
+
+    </style>
+    
+    <div class="socialButton">
+        <!--sign in con Google -->
+    <paper-button on-tap="signGoogle" disabled="[[disabled]]"> 
+        <img src="http://veithen.github.io/images/icon-gplus.svg"></img>
+    </paper-button>
+
+  <!--sign in con Facebook -->
+    <paper-button on-tap="signFacebook" disabled="[[disabled]]"> 
+        <img src="../images/facebook-3.svg"></img>
+    </paper-button>
+    </div>
+   
+  </template>
+
+  <script>
+
+    class LoginSocial extends FireloginError(Polymer.Element){
+      static get is() { return 'login-social' } 
+
+       /**
+          * user sign in with Facebook / Google
+          * launch 'sign-social' event,listened by <login-admin> component
+          * IMPORTANT: we must enable this login methods in Firebase
+          */
+
+        signGoogle() {
+            let google = new firebase.auth.GoogleAuthProvider(); // provider
+            this.dispatchEvent(new CustomEvent('sign-social',{bubbles:false, composed:true, detail:google})); 
+        }
+        signFacebook() {
+            let facebook = new firebase.auth.FacebookAuthProvider(); // provider
+            this.dispatchEvent(new CustomEvent('sign-social',{bubbles:false, composed:true, detail:facebook}));        
+        }
+    }
+
+    window.customElements.define(LoginSocial.is,LoginSocial)
+
+  </script>
+</dom-module>

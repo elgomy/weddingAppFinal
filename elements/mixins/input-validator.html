@@ -1,0 +1,51 @@
+<script>
+
+    /**
+    * Mixin to validate <paper-input> component
+    * Necessary to call validator() method when user click the submit form button
+    * IMPORTANT: must be included in the component with the inputs to validate the observer necessary to monitorate de property of the Object included as input value:
+
+    *<paper-input 
+          id="usernameInput"
+          label="User name" 
+          value="{{user.name}}"
+          required       
+          error-message="Please enter your user name">         
+      </paper-input> 
+    * observer that is launched whenever the user text something in any input // any user Object property changes:
+	*static get observers(){
+        return [
+            'clearInputError(user.*)'
+        ]
+      }
+    */
+
+     inputValidator = (superClass)=>{
+        return class extends superClass{
+      /**
+      * clear input error whenever the user text something in any input
+      * sets 'paper-input' invalid property to null (valid)
+      * inputs: usernameInput, emailInput, passInput
+      */
+      clearInputError(){
+        var inputs = this.shadowRoot.querySelectorAll('paper-input');
+        for(var i = 0; i < inputs.length; i++){
+          inputs[i].invalid = null
+        }
+
+      }
+       /**
+      * validates ('paper-input' method validate()) all the inputs, lauching an error message if needed
+      */
+      validator(){
+        var inputs = this.shadowRoot.querySelectorAll('paper-input');
+        for(var i = 0; i < inputs.length; i++){
+          inputs[i].validate()
+        }
+
+      }
+        }
+     
+    }
+
+  </script>

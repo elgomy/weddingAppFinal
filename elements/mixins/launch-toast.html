@@ -1,0 +1,29 @@
+<script>
+	/**
+    * Mixin to launch the 'toast' component. The event is listened by another component, in this case <my-app> component:
+    * this.addEventListener('positiveToast', e => this._openPositiveToast(e));
+    * this.addEventListener('negativeToast', e => this._openNegativeToast(e));
+    *  _openPositiveToast(e){
+            this.$.positiveToast.open();
+            this.$.positiveToast.text = e.detail
+        }
+
+    *   _openNegativeToast(e){
+            this.$.negativeToast.open();
+            this.$.negativeToast.text = e.detail
+        } 
+    * @param {message} the message to show in the 'toast'  
+    */
+
+     LaunchToast = (superClass)=>{
+        return class extends superClass{
+     		launchPositiveToast(message){
+           		this.dispatchEvent(new CustomEvent('positiveToast', {bubbles:true, composed:true, detail:message}));
+      		}
+      		launchNegativeToast(message){
+           		this.dispatchEvent(new CustomEvent('negativeToast', {bubbles:true, composed:true, detail:message}));
+      		}
+        }    
+    }
+
+  </script>
