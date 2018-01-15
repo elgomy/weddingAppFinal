@@ -30,6 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- NEW IMPORTS -->
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 
 
 <dom-module id="my-app">
@@ -74,6 +75,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
       /* Media query */
       @media (max-width: 600px){
+
         .header-menu{
           display: none
         }
@@ -117,6 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-tab name="view2">Tab two</paper-tab>
             <paper-tab name="view3">Tab three</paper-tab>
           </paper-tabs>
+
         </app-header>
 
         <iron-pages
@@ -131,6 +134,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </iron-pages>
       </app-header-layout>
     </app-drawer-layout>
+
+     <!--Initialize Firebase -->
+    <firebase-app 
+        auth-domain="weeding-app-8af05.firebaseapp.com"
+        database-url="https://weeding-app-8af05.firebaseio.com"
+        api-key="AIzaSyA9FjGrIYQzNLk8qCSYFvrA7u4FfUU_uG8"
+        name="wedding-app"
+        project-id="weeding-app-8af05"
+        storage-bucket="weeding-app-8af05.appspot.com"
+        messaging-sender-id="338583580606"
+        app="{{fbapp}}">
+    </firebase-app>
    
 
   </template>
@@ -151,6 +166,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           // This shouldn't be neccessary, but the Analyzer isn't picking up
           // Polymer.Element#rootPath
           rootPath: String,
+
+          // Added properties:
+           /**
+          * Object that brings access to firebase services 
+          * @type {Object}
+          */ 
+          fbapp:Object,
         };
       }
 
@@ -184,6 +206,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404() {
         this.page = 'view404';
       }
+
     }
 
     window.customElements.define(MyApp.is, MyApp);
