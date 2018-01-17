@@ -185,7 +185,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
-      .header-menu, .drawer__login-grid{
+      .header-menu, .drawer__login-grid, .drawer__main-title{
           display: none;
         }
 
@@ -194,9 +194,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       } 
 
-      app-toolbar.header__toolbar{
-          height: 55px;
-      }
+    
 
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
@@ -206,9 +204,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* Media query . Here include styles for bigger screens (mobile first) */
       @media (min-width: 640px){
 
-        .header-menu{
+        .header-menu, .drawer__main-title{
           display: block;
         }
+
+        paper-tabs{
+       
+        font-size: 1.2rem;
+        margin-top: 20px;
+        --paper-tab-ink:#ffffff;
+        --paper-tabs-selection-bar-color:none;
+
+      }
+
+      paper-tab{
+        font-family: 'Montserrat'
+        
+      }
 
         .account-icon, .account-image, .drawer-list, .header__main-title{
           display: none;
@@ -216,7 +228,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
          /* height added to paper-tabs header menu height */
         app-toolbar.header__toolbar{
-          height: 5px;
+          height: 3px;
         }
 
         .drawer__login-grid{
@@ -267,7 +279,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!-- Drawer content -->
       <app-drawer id="drawer" slot="drawer">
         <app-toolbar>
-          <div main-title spacer>Gomivia</div>
+          <div main-title spacer class="drawer__main-title">Gomivia</div>
         </app-toolbar>
         <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
           <a name="view1" href="[[rootPath]]view1">View One</a>
