@@ -48,7 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         display: block;      
           /* responsive drawer. IMP: to work properly it must be included in :host; */
-        --app-drawer-width:30%;
+        --app-drawer-width:37%;
 
       }
 
@@ -64,7 +64,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
+      
+        .drawer-list {
+          margin: 0 20px;
+        }
 
+        .drawer-list a {
+          display: block;
+          padding: 0 16px;
+          text-decoration: none;
+          color: var(--app-secondary-color);
+          line-height: 40px;
+        }
+
+        .drawer-list a.iron-selected {
+          color: black;
+          font-weight: bold;
+        }
    
 
       /* Added styles */
@@ -169,64 +185,68 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
+      .header-menu, .drawer__login-grid{
+          display: none;
+        }
+
 
       .account-icon, .account-image, .drawer-list, .header__main-title{
-        display: none;
+        display: block;
+      } 
+
+      app-toolbar.header__toolbar{
+          height: 55px;
       }
 
+    /* set hidden to display:none to optimize hidden$ atribute rendering */;
+      [hidden]{
+        display: none;
+      }
+         
+      /* Media query . Here include styles for bigger screens (mobile first) */
+      @media (min-width: 640px){
+
+        .header-menu{
+          display: block;
+        }
+
+        .account-icon, .account-image, .drawer-list, .header__main-title{
+          display: none;
+        }
+
+         /* height added to paper-tabs header menu height */
         app-toolbar.header__toolbar{
           height: 5px;
         }
 
-         
-
-    /* set hidden to display:none to optimize hidden$ atribute rendering */;
-    [hidden]{
-      display: none;
-    }
-     
-      
-      /* Media query */
-      @media (max-width: 640px){
-
-        .header-menu{
-          display: none;
+        .drawer__login-grid{
+          display: grid;
+          grid-template-columns: 1fr minmax(11em,15em) 1fr;
+          grid-template-rows: 10em minmax(16em,16em) 1fr;
         }
 
-         .account-icon, .account-image, .drawer-list, .header__main-title{
-        display: block;
-      }
+        .drawer__login-admin{
+          grid-column: 2/3;
+          grid-row: 2/3;
+        } 
 
-        .drawer-list {
-          margin: 0 20px;
+        .drawer__avatar-icon{
+          --iron-icon-width:80px;     
+          --iron-icon-height:80px;    
         }
 
-        .drawer-list a {
-          display: block;
-          padding: 0 16px;
-          text-decoration: none;
-          color: var(--app-secondary-color);
-          line-height: 40px;
-        }
-
-        .drawer-list a.iron-selected {
-          color: black;
-          font-weight: bold;
-        }
-
-        app-toolbar.header__toolbar{
-          height: 55px;
+        .drawer__avatar-container{
+          @apply(--layout-horizontal);
+          @apply(--layout-center-justified);
+          @apply(--layout-center); 
+          grid-column: 2/3;
+          grid-row: 1/2;
         }
         
-
-          /* set hidden to display:none to optimize hidden$ atribute rendering */;
-    [hidden]{
-      display: none;
-    }
-
-
-       
-
+        /* set hidden to display:none to optimize hidden$ atribute rendering */;
+        [hidden]{
+          display: none;
+        }
 
       }
     </style>
@@ -254,6 +274,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="view2" href="[[rootPath]]view2">View Two</a>
           <a name="view3" href="[[rootPath]]view3">View Three</a>
         </iron-selector>
+        <!-- Drawer login system -->
+        <div class="drawer__login-grid">
+          <div class="drawer__avatar-container">
+           <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon> 
+          </div>        
+            <login-admin class="drawer__login-admin"></login-admin>
+          </div>
+        </div>
       </app-drawer>
 
       <!-- Main content -->
@@ -408,9 +436,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404() {
         this.page = 'view404';
       }
-
       // Added methods
-
       ready(){
         super.ready();
         this.addEventListener('positiveToast', e => this._openPositiveToast(e));
