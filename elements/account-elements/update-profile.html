@@ -2,11 +2,13 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <link rel="import" href="../mixins/input-validator.html">
+<link rel="import" href="../login-elements/login-styles.html">
 
     <dom-module id="update-profile">
       <!-- Optional shadow DOM template -->
       <template>
-        <style>
+          <!-- styles included in login-styles module -->
+    <style include="login-styles">
           /* CSS rules for your element */
         </style>
 
@@ -34,7 +36,7 @@
 
       <script>
         // Define the element's API using an ES2015 class
-        class updateProfile extends inputValidator(Polymer.Element) {
+        class UpdateProfile extends inputValidator(Polymer.Element) {
 
           static get is() { return 'update-profile'; }
 
@@ -84,7 +86,7 @@
     }
 
         // Register the x-custom element with the browser
-        window.customElements.define(updateProfile.is, updateProfile);
+        window.customElements.define(UpdateProfile.is, UpdateProfile);
       </script>
 
     </dom-module>

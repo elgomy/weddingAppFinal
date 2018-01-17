@@ -30,7 +30,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <!-- NEW IMPORTS -->
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
+
+<link rel="import" href="../elements/elements-import.html">
 
 
 <dom-module id="my-app">
@@ -72,6 +78,114 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: black;
         font-weight: bold;
       }
+
+      /* Added styles */
+
+      /* Login styles */
+
+      .account-icon{
+        --iron-icon-width:35px;     
+        --iron-icon-height:35px; 
+      }
+
+      .account-image{
+        background-color:var(--app-primary-color);
+        border-radius: 50%;
+        --iron-image-width:35px;
+        --iron-image-height:35px;
+      }
+
+      .account-drop{
+        width: 22rem;
+        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+      }
+
+      .account-drop__content{
+        overflow-x: hidden;    
+        display: grid;
+        grid-template-columns: 5rem 1fr;
+        grid-template-rows: 2fr 1fr;
+        font-size: 1rem;
+        padding: 0;
+        background-color: white; 
+          
+      }
+
+      .account-drop__photo{
+        padding:10px;
+        border-radius: 50%;
+        margin-right: 5px;
+        width: 65px;
+        height: 65px;
+       
+      }
+
+      .account-drop__actions{
+        grid-column: 1/3;
+        background: #eceff1;
+        text-decoration: none;
+        border-top: 1px solid #b0bec5;       
+        border-radius:0px 0px 5px 5px;
+        @apply(--layout-horizontal);         
+        @apply(--layout-around-justified);
+      }
+
+      .account-drop__actions a{
+        text-decoration: none;
+      }
+
+      .account-drop__actions paper-button{
+        color:black;
+      }
+
+      .account-drop__profile{
+        grid-column: 2/3;
+        padding:10px;
+        color:black;
+        @apply(--layout-vertical);         
+        @apply(--layout-around-justified);
+        
+      }
+
+      .login-dialog{
+        width: 30rem;
+        max-width: 320px;
+        border-radius:10px;
+        height: auto;
+        display: grid;
+        grid-template-rows: 5rem 1fr;
+        
+      }
+
+      .login-dialog__header{
+        margin: 0;
+        padding: 1.5rem;
+        border-radius:10px 10px 0px 0px;
+        background: var(--accent-color);
+        color:white;
+        @apply(--layout-horizontal);         
+        @apply(--layout-around-justified);
+      }
+
+      paper-toast.positiveToast{
+        --paper-toast-background-color: #4caf50;
+        --paper-toast-color: #ffffff;
+        font-weight: bold;
+        text-align: center;
+      }
+
+       paper-toast.negativeToast{
+        --paper-toast-background-color: #78909c;
+        --paper-toast-color: #ffffff;
+        font-weight: bold;
+        text-align: center;
+      }
+
+    /* set hidden to display:none to optimize hidden$ atribute rendering */;
+    [hidden]{
+      display: none;
+    }
+     
       
       /* Media query */
       @media (max-width: 600px){
@@ -109,16 +223,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-header-layout has-scrolling-region>
 
         <app-header slot="header" condenses reveals effects="waterfall">
+
           <app-toolbar>
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title>My App</div>
+
+            <iron-icon on-tap="dialogLogin" icon="my-icons:account-circle" hidden$="{{signed}}" class="account-icon"></iron-icon> 
+            <iron-image loaded="{{loaded}}" hidden$="{{!signed}}" on-tap="dropAccount" src="[[userProfile.photoURL]]" class="account-image"></iron-image>
           </app-toolbar>
+
           <!-- Header menu -->
           <paper-tabs class="header-menu" selected="{{page}}" attr-for-selected="name">
             <paper-tab name="view1">First tab</paper-tab>
             <paper-tab name="view2">Tab two</paper-tab>
             <paper-tab name="view3">Tab three</paper-tab>
           </paper-tabs>
+
+          <!-- Account Dropdown  -->             
+          <iron-dropdown id="profileDrop" class="account-drop" horizontal-align="right" vertical-align="top" vertical-offset="68" horizontal-offset="5">
+            <div slot="dropdown-content">
+                <div class="account-drop__content">
+                  <img class="account-drop__photo" hidden$="{{!signed}}" src$="[[userProfile.photoURL]]">
+                  <div class="account-drop__profile">
+                    [[userProfile.nombre]] </br>
+                    [[user.email]]
+                  </div>
+                  <div class="account-drop__actions" id="actions">
+                    <a href="view3"><paper-button>Account</paper-button></a>
+                    <paper-button on-tap="logout">Log out</paper-button>
+                  </div>
+                </div>      
+            </div>
+          </iron-dropdown> 
 
         </app-header>
 
@@ -135,6 +271,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </app-header-layout>
     </app-drawer-layout>
 
+    <!-- Login dialog -->
+    <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
+      <h2 class="login-dialog__header">
+        <span>Welcome</span> 
+        <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
+      </h2>
+      <div class="login-dialog__admin">
+        <login-admin></login-admin>
+      </div> 
+     </paper-dialog>
+
+     <!--toast -->
+    <paper-toast id="positiveToast" class="positiveToast" duration="4000"></paper-toast>
+    <paper-toast id="negativeToast" class="negativeToast" duration="4000"></paper-toast>
+
      <!--Initialize Firebase -->
     <firebase-app 
         auth-domain="weeding-app-8af05.firebaseapp.com"
@@ -146,7 +297,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         messaging-sender-id="338583580606"
         app="{{fbapp}}">
     </firebase-app>
-   
+
+    <firebase-auth 
+        app-name="wedding-app"
+        id="auth" 
+        user="{{user}}" 
+        signed-in="{{signed}}"
+        status-known="{{statusKnown}}"
+        app="{{fbapp}}">
+    </firebase-auth>
+
+    <firebase-document               
+        app-name="wedding-app"
+        path="/users/{{user.uid}}" 
+        data="{{userProfile}}">
+    </firebase-document>
 
   </template>
 
@@ -206,6 +371,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _showPage404() {
         this.page = 'view404';
       }
+
+      // Added methods
+
+      ready(){
+        super.ready();
+        this.addEventListener('positiveToast', e => this._openPositiveToast(e));
+        this.addEventListener('negativeToast', e => this._openNegativeToast(e));
+        this.addEventListener('closeLogin', e => this.dialogClose(e));
+        this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account>  
+      }
+
+       /**
+          * we need to include Toast in <my-app> component in order to show it correctly
+          * @param {e} receive text to be included in the toast
+          */
+      _openPositiveToast(e){
+            this.$.positiveToast.open();
+            this.$.positiveToast.text = e.detail
+        }
+
+      _openNegativeToast(e){
+            this.$.negativeToast.open();
+            this.$.negativeToast.text = e.detail
+        }
+      /**
+          * open dialog with login / signup system
+          */
+
+      dialogLogin(){
+        this.$.dialogAuthentic.toggle()
+      }
+
+      dialogClose(){     
+        this.$.dialogAuthentic.close()
+      }
+      /**
+          * open header drowpdown with account options
+          */
+      dropAccount(){
+       
+        this.$.profileDrop.open()
+      }
+
+      closeDrope(){
+        this.$.profileDrop.close()
+      }
+
+      /**
+          * Firebase logout system
+          */
+      logout(){
+        if (!this.user){
+                alert('you are not logged in')
+                    return false;
+                  }
+
+        this.$.auth.signOut().catch(function(error){
+          console.log(error.code, error.message)
+        }).then(function(){
+            this.closeDrope();
+            this.dispatchEvent(new CustomEvent('positiveToast',{bubbles:true, composed:true, detail:'C u soon!'}))
+         // this.fire('positive-toast','Sessão encerrada')
+        }.bind(this))
+      }
+
 
     }
 

@@ -3,7 +3,7 @@
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="../mixins/input-validator.html">
-
+<link rel="import" href="login-styles.html">
 <!--
 component with the register form
 
@@ -12,48 +12,12 @@ component with the register form
 
 <dom-module id="login-register">
   <template>
-    <style>
+    <!-- styles included in login-styles module -->
+    <style include="login-styles">      
       :host {
-      @apply(--layout-flex);
-      
+      display: block;    
       }
-
-       .inputs{
-        max-width: 400px;      
-        margin: auto
-      }
-
-      paper-input{
-        --paper-input-container-focus-color:var(--accent-color);
-        --paper-input-container-label:{
-              font-size: 0.85em;};
-      }
-
-      gold-email-input{
-        --paper-input-container-focus-color:var(--accent-color);
-        --paper-input-container-label:{
-              font-size: 0.85em;};
-      }
-
-       paper-button{
-        background: var(--accent-color);
-        color:white;
-        text-transform: capitalize;
-        border-radius: 25px;
-        padding: 7px
-      }
-
-    /*  :host([signed-in]) { /*condicional de estilo que nos permite que cuando el usuario se loguee el componente se haga invisible
-        opacity: 0;
-        pointer-events: none; 
-      } */
-
-       @media (max-width: 600px) { /* cambiarlo por min-width MOBILE FIRST
-        .inputs{
-            max-width: 325px;    
-            margin-left: 1px
-        }
-  </style>
+    </style>
 
     <!-- REGISTER USER FORM -->
     <div class=inputs>
@@ -72,12 +36,12 @@ component with the register form
         type="email"
         value="{{user.email}}" 
         required        
-        error-message="Invalid email">
+        error-message="Invalid e-mail">
       </paper-input>
 
       <paper-input 
         id="passInput"
-        label="Senha" 
+        label="Password" 
         type="password" 
         minlength="6"
         value="{{user.password}}"

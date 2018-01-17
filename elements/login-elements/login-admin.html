@@ -14,6 +14,7 @@
 <link rel="import" href="../mixins/saveprofile-firebase.html">
 <link rel="import" href="../mixins/launch-toast.html">
 
+
 <!--
 `login-admin`
  user login, signup with Firebase (save user data into Firebase)
@@ -24,55 +25,60 @@
   <template>
     <style>
       :host {
-        
+        display: block;
       } 
 
-      img{
-        width: 35px; /* mejor usar los tamaños viewport */
-        height: 35px;
-      }   
+      /* same bottom position <login-register> component */
+      .login__signin{
+        margin-top: 62px;
 
+      }
+   
       paper-tab{
         font-family: "Averta","Avenir W02","Avenir",Helvetica,Arial,sans-serif;font-size: 1.5em;
         --paper-tab-ink:var(--accent-color);                   
       }
 
-      paper-tabs{
-        
+      paper-tabs{     
         --paper-tabs-selection-bar-color:var(--accent-color);
         --paper-tabs-selection-bar:{
           color:red;
         }
-        --paper-tabs:{
-          
+        --paper-tabs:{     
           margin-top: 1px
         }
       }
 
- 
+      .spinner{
+        @apply(--layout-horizontal);
+        @apply(--layout-center-justified);
+      }
 
     </style>
 
     <!-- Polymerfire component to authenticate users -->
     <firebase-auth 
-            app-name="wedding-app"
-            id="auth" 
-            user="{{firebaseUser}}" 
-            signed-in="{{signed}}"
-            app="{{fbapp}}">
+        app-name="wedding-app"
+        id="auth" 
+        user="{{firebaseUser}}" 
+        signed-in="{{signed}}"
+        app="{{fbapp}}">
    </firebase-auth>
 
      <!-- USER LOGIN / SIGN UP -->
-    
+   
       <paper-tabs align-bottom selected="{{signSect}}" attr-for-selected="name">
         <paper-tab name="signin">Log In</paper-tab>
         <paper-tab name="register">Sign Up</paper-tab>
       </paper-tabs>
    
+    <div class="login__wrapper">
       <iron-pages selected="{{signSect}}" attr-for-selected="name">
-            
-        <div name="signin" class="signin">
-          <paper-spinner-lite id="loginSpinner"></paper-spinner-lite>
+
+        <div name="signin" class="login__signin">
+          <div class="spinner">
+            <paper-spinner-lite id="loginSpinner" alt="sign in processing"></paper-spinner-lite>
+          </div>
           <login-signin 
               on-email-signin="emailSignIn"
               signed-in="[[signed]]">
@@ -84,20 +90,18 @@
           </login-social>  -->
         </div>
 
-        <div name="register">
-          <paper-spinner-lite id="registerSpinner"></paper-spinner-lite>
-          
-
+        <div name="register" class="login__register">
+          <div class="spinner">
+            <paper-spinner-lite id="registerSpinner" alt="registering"></paper-spinner-lite>
+          </div>
           <login-register 
               on-register="signUp" 
               signed-in="[[signed]]">
           </login-register>
-        </div>
-
-      
+        </div>   
    
-    </iron-pages>
-          
+      </iron-pages>
+    </div>
   </template>
 
   <script>
@@ -139,9 +143,7 @@
           fbapp:Object,
         
         }
-      }   
-
-     
+      }      
 
         /**
           * user sign up

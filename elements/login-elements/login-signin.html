@@ -3,58 +3,20 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 <link rel="import" href="../mixins/input-validator.html">
+<link rel="import" href="login-styles.html">
 
 <dom-module id="login-signin">
   <template>
-    <style>
-      :host {
-            
-        left: 0;
-        right: 0;
-        bottom: 0;
-       
-       /* background-color: var(--paper-indigo-a200); */
-       
-      }
-
-    /*  :host([signed-in]) { /*condicional de estilo que nos permite que cuando el usuario se loguee el componente se haga invisible
-        opacity: 0;
-        pointer-events: none; 
-      } */
-
-       paper-button{
-      @apply --accent-color;
-
-        color:white;
-        text-transform: capitalize;
-        width: 160px;
-        padding: 7px;
-        margin-top: 25px;
-        
-      }
-   
-      img{
-      height: 40px;
-      width: 40px;
-      } 
-
-    .inputs{
-        max-width: 400px;      
-        margin: auto
-      }
-
-      paper-input{
-        --paper-input-container-focus-color:var(--accent-color);
-        --paper-input-container-label:{
-              font-size: 0.85em;};     
-      }
-
-       </style>
+    <!-- styles included in login-styles module -->
+    <style include="login-styles">
+      :host {            
+        display: block       
+      }  
+    </style>
           
       <!-- SIGN FORM -->
 
     <div class="inputs">
-
       <paper-input 
         id="emailInput"   
         label="E-mail" 
@@ -74,10 +36,9 @@
         error-message="Invalid password"
         value="{{user.password}}">
       </paper-input>
-   
-    <paper-button id="signButton" raised on-tap="signEmail">Vaaamooosss</paper-button>
+   </div>
 
-    </div>
+    <paper-button id="signButton" raised on-tap="signEmail">Enter</paper-button> 
  
   </template>
 
