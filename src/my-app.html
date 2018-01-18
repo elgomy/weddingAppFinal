@@ -44,11 +44,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         --app-primary-color: #4285f4;
-        --app-secondary-color: black;
+        --app-secondary-color: #000;
 
         display: block;      
           /* responsive drawer. IMP: to work properly it must be included in :host; */
-        --app-drawer-width:37%;
+       
 
       }
 
@@ -65,22 +65,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --paper-icon-button-ink-color: white;
       }
       
-        .drawer-list {
-          margin: 0 20px;
-        }
+      .drawer-list {
+        margin: 0 20px;
+        border-bottom: 1px solid #e0e0e0;
+      }
 
-        .drawer-list a {
-          display: block;
-          padding: 0 16px;
-          text-decoration: none;
-          color: var(--app-secondary-color);
-          line-height: 40px;
-        }
+      .drawer-list a {
+        display: block;
+        padding: 0 16px;
+        text-decoration: none;
+        color: var(--app-secondary-color);
+        line-height: 40px;
+      }
 
-        .drawer-list a.iron-selected {
-          color: black;
-          font-weight: bold;
-        }
+      .drawer-list a.iron-selected {
+        color: blue;
+        font-weight: bold;
+      }
    
 
       /* Added styles */
@@ -101,21 +102,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .account-drop{
         width: 22rem;
-        -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2); 
+        -webkit-box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.14), 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 4px 2px -2px rgba(0, 0, 0, 0.2);box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 4px 2px -2px rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
       }
 
       .account-drop__content{
         overflow-x: hidden;    
         display: grid;
-        grid-template-columns: 5rem 1fr;
-        grid-template-rows: 2fr 1fr;
+        grid-template-columns: .5rem 5rem 1fr;
+        grid-column-gap: 1rem;
+        grid-template-rows: .5rem 6rem 1fr;
         font-size: 1rem;
         padding: 0;
         background-color: white; 
+        border-radius: 10px;
           
       }
 
       .account-drop__photo{
+        grid-column: 2/3;
+        grid-row: 2/3;
         padding:10px;
         border-radius: 50%;
         margin-right: 5px;
@@ -125,11 +131,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .account-drop__actions{
-        grid-column: 1/3;
+        grid-column: 1/4;
+        grid-row: 3/4;
         background: #eceff1;
         text-decoration: none;
         border-top: 1px solid #b0bec5;       
-        border-radius:0px 0px 5px 5px;
+        border-radius: 0px 0px 10px 10px;
         @apply(--layout-horizontal);         
         @apply(--layout-around-justified);
       }
@@ -143,7 +150,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .account-drop__profile{
-        grid-column: 2/3;
+        grid-column: 3/4;
+        grid-row: 2/3;
         padding:10px;
         color:black;
         @apply(--layout-vertical);         
@@ -185,14 +193,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
-      .header-menu, .drawer__login-grid, .drawer__main-title{
+      .header-menu, .drawer__login-grid, .drawer__main-title, .drawer__user-container, .drawer__button-logout{
           display: none;
         }
-
 
       .account-icon, .account-image, .drawer-list, .header__main-title{
         display: block;
       } 
+
 
     
 
@@ -204,23 +212,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* Media query . Here include styles for bigger screens (mobile first) */
       @media (min-width: 640px){
 
+        :host{
+           --app-drawer-width:37%;
+        };
+
         .header-menu, .drawer__main-title{
           display: block;
         }
 
-        paper-tabs{
-       
-        font-size: 1.2rem;
-        margin-top: 20px;
-        --paper-tab-ink:#ffffff;
-        --paper-tabs-selection-bar-color:none;
+        paper-tabs{     
+          font-size: 1.2rem;
+          margin-top: 20px;
+          --paper-tab-ink:#ffffff;
+          --paper-tabs-selection-bar-color:none;
+        }
 
-      }
-
-      paper-tab{
-        font-family: 'Montserrat'
-        
-      }
+        paper-tab{
+         font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+        }
 
         .account-icon, .account-image, .drawer-list, .header__main-title{
           display: none;
@@ -233,26 +242,56 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         .drawer__login-grid{
           display: grid;
-          grid-template-columns: 1fr minmax(11em,15em) 1fr;
-          grid-template-rows: 10em minmax(16em,16em) 1fr;
-        }
-
-        .drawer__login-admin{
-          grid-column: 2/3;
-          grid-row: 2/3;
-        } 
-
-        .drawer__avatar-icon{
-          --iron-icon-width:80px;     
-          --iron-icon-height:80px;    
+          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
+          grid-template-rows: [topRow] 10em [centRow] minmax(16em,16em) [botRow] 1fr;
         }
 
         .drawer__avatar-container{
           @apply(--layout-horizontal);
           @apply(--layout-center-justified);
           @apply(--layout-center); 
-          grid-column: 2/3;
-          grid-row: 1/2;
+          grid-column: centerCol;
+          grid-row: topRow;
+        }
+
+         .drawer__avatar-icon{
+          --iron-icon-width:100px;     
+          --iron-icon-height:100px;    
+        }
+
+        .drawer__login-admin{
+          grid-column: centerCol;
+          grid-row: centRow;
+        }    
+
+        .drawer__user-grid{
+          display: grid;
+          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
+          grid-template-rows: [topRow] 10em [centRow] 2em [botRow] minmax(16em,16em);
+        }
+
+        .drawer__user-container{
+          @apply(--layout-horizontal);
+          @apply(--layout-center-justified);
+          @apply(--layout-center); 
+          grid-column: centerCol;
+          grid-row: topRow;
+        }
+
+        .drawer__user-image{
+          width: 100px;
+          height: 100px;
+          border-radius: 50%;
+        }
+
+        .drawer__tasks{
+          grid-column: centerCol;
+          grid-row: botRow;
+        }
+
+        .drawer__button-logout{
+          grid-column: centerCol;
+          grid-row: centRow;
         }
         
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
@@ -287,13 +326,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a name="view3" href="[[rootPath]]view3">View Three</a>
         </iron-selector>
         <!-- Drawer login system -->
-        <div class="drawer__login-grid">
+        <div class="drawer__login-grid" hidden$="{{signed}}">
           <div class="drawer__avatar-container">
-           <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon> 
+            <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon>  
           </div>        
-            <login-admin class="drawer__login-admin"></login-admin>
+            <login-admin class="drawer__login-admin"></login-admin>     
+        </div>
+
+         <div class="drawer__user-grid" hidden$="{{!signed}}">
+          <div class="drawer__user-container">
+           <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image>      
+          </div>   
+            <tasks-element class="drawer__tasks"></tasks-element>     
+            <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button>
           </div>
         </div>
+        
+        
       </app-drawer>
 
       <!-- Main content -->
@@ -320,7 +369,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <iron-dropdown id="profileDrop" class="account-drop" horizontal-align="right" vertical-align="top" vertical-offset="68" horizontal-offset="5">
             <div slot="dropdown-content">
                 <div class="account-drop__content">
-                  <img class="account-drop__photo" hidden$="{{!signed}}" src$="[[userProfile.photoURL]]">
+                  <iron-image class="account-drop__photo" hidden$="{{!signed}}" src$="[[userProfile.photoURL]]" sizing="cover"></iron-image>
                   <div class="account-drop__profile">
                     [[userProfile.nombre]] </br>
                     [[user.email]]
@@ -415,6 +464,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           * @type {Object}
           */ 
           fbapp:Object,
+       
         };
       }
 
@@ -455,6 +505,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.addEventListener('negativeToast', e => this._openNegativeToast(e));
         this.addEventListener('closeLogin', e => this.dialogClose(e));
         this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account>  
+       
       }
 
        /**
@@ -510,6 +561,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          // this.fire('positive-toast','Sessão encerrada')
         }.bind(this))
       }
+
+
 
 
     }

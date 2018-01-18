@@ -26,7 +26,7 @@
     <style>
       :host {
         display: block;
-   
+
       } 
 
       /* same bottom position <login-register> component */
@@ -65,6 +65,7 @@
         signed-in="{{signed}}"
         app="{{fbapp}}">
    </firebase-auth>
+
 
      <!-- USER LOGIN / SIGN UP -->
    
@@ -197,7 +198,8 @@
                   if (result){
                       this.$.loginSpinner.active = false; 
                       this.launchPositiveToast('Hello!!') ;
-                      this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true})) 
+                      this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true}));
+                      this.dispatchEvent(new CustomEvent('setProfilePhoto',{bubbles:true, composed:true, detail: result})) 
                   }   
               });
       }
@@ -209,7 +211,7 @@
           * launch login error // mixin firelogin-error
           * @param {e} receive user email and user password through e.detail property // <login-social>
           */
-
+      /*
       signSocial(e){
             if (this.user){
                 this.launchNegativeToast('You are already logged in')
@@ -220,7 +222,7 @@
                   this.launchPositiveToast('Hello!!');  
                   this.dispatchEvent(new CustomEvent('closeLogin',{bubbles:true, composed:true}));                  
               }, (error)=>this.errorCode(error));  
-        }
+        } */
      
   }
 
