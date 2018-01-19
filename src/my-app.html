@@ -56,15 +56,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-header {
-        color: #fff;
-        
+        color: #fff;    
       }
 
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
 
-    /* Body background image with duotone efect */
+    /* Body background image with duotone effect */
       app-header-layout{
         background: url('../images/background-image.jpg') no-repeat center center fixed;
         background-size: cover;
@@ -87,44 +86,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header-layout::after{
         background-color: rgb(25, 37, 80);
         content: '';
-        display: block;
+        display: flex;
         width: 100%;
         height: 100%;
         mix-blend-mode: lighten;
         position: absolute;
         top: 0;
         left: 0;
+        overflow-y: auto;
       }
 
   /* /////////////////////////////////////////////////// */
+
+      .drawer__container{
+        display: grid;
+        grid-template-rows: [menuRow] 7rem [tasksRow] 7rem;
+        grid-row-gap: 2rem;
+      }
          
       .drawer-list {
         margin: 0 20px;
+           
       }
 
       .drawer-list a {
         display: block;
         padding: 0 16px;
         text-decoration: none;
-        color: var(--accent-color);
-        line-height: 40px;
+        color: var(--app-secondary-color);
+        line-height: 35px;
       }
 
       .drawer-list a.iron-selected {
-        color: white;
+        color: var(--app-secondary-color);
         font-weight: bold;
-        background: var(--accent-color);
+        border-left: 5px solid var(--accent-color);
       }
 
       .drawer-list a:hover {
         display: block;
         padding: 0 16px;
-        text-decoration: none;
-        color: var(--app-secondary-color);
-        line-height: 40px;
-        color:#3F88E0;
-      }
-   
+        text-decoration: none;    
+        color: #c2185b;
+        line-height: 35px;
+        
+      }  
 
       /* Added styles */
 
@@ -243,6 +249,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       } 
 
+      .drawer__tasks-container{
+        margin-top: 3rem;
+
+      }
+
+
+
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
@@ -357,37 +370,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      <!-- set 'fullbleed' to ocuppy total body space. Important -->
     <app-drawer-layout fullbleed>
       <!-- Drawer content -->
-      <app-drawer id="drawer" slot="drawer">
+      <app-drawer id="drawer" slot="drawer" no-focus-trap>
         <app-toolbar>
           <div main-title spacer class="drawer__main-title">Gomivia</div>
         </app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="[[rootPath]]view1">Inicio</a>
-          <a name="view2" href="[[rootPath]]view2">View Two</a>
-          <a name="view3" href="[[rootPath]]view3">View Three</a>
-        </iron-selector>
-        <!-- Drawer login system -->
-        <div class="drawer__login-grid" hidden$="{{signed}}">
-          <div class="drawer__avatar-container">
-            <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon>  
-          </div>        
-            <login-admin class="drawer__login-admin"></login-admin>     
-        </div>
 
-         <div class="drawer__user-grid" hidden$="{{!signed}}">
-          <div class="drawer__user-container">
-           <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image>      
-          </div>   
-            <tasks-element class="drawer__tasks"></tasks-element>     
-            <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button>
+        <div class="drawer__container">
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="view1" href="[[rootPath]]view1">Inicio</a>
+            <a name="view2" href="[[rootPath]]view2">Dónde</a>
+            <a name="view3" href="[[rootPath]]view3">El viaje</a>
+          </iron-selector>
+          <!-- Drawer login system -->
+          <div class="drawer__login-grid" hidden$="{{signed}}">
+            <div class="drawer__avatar-container">
+              <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon>  
+            </div>        
+              <login-admin class="drawer__login-admin"></login-admin>     
+          </div>
+
+          <div class="drawer__user-grid" hidden$="{{!signed}}">
+            <div class="drawer__user-container">
+             <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image>      
+            </div>         
+              <tasks-element class="drawer__tasks"></tasks-element>             
+              <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button>
           </div>
         </div>
-        
+       
         
       </app-drawer>
 
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
+
+       
 
         <app-header slot="header" condenses reveals effects="waterfall">
 
@@ -402,8 +419,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Header menu -->
           <paper-tabs class="header-menu" selected="{{page}}" attr-for-selected="name">
             <paper-tab name="view1">Inicio</paper-tab>
-            <paper-tab name="view2">Tab two</paper-tab>
-            <paper-tab name="view3">Tab three</paper-tab>
+            <paper-tab name="view2">Dónde</paper-tab>
+            <paper-tab name="view3">El viaje</paper-tab>
           </paper-tabs>
 
           <!-- Account Dropdown  -->             
@@ -435,6 +452,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-view3 name="view3"></my-view3>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
+       
       </app-header-layout>
     </app-drawer-layout>
 
