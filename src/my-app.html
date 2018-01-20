@@ -25,6 +25,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="lazy-import" href="my-view1.html">
 <link rel="lazy-import" href="my-view2.html">
 <link rel="lazy-import" href="my-view3.html">
+<link rel="lazy-import" href="my-view4.html">
 <link rel="lazy-import" href="my-view404.html">
 
 <!-- NEW IMPORTS -->
@@ -32,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
@@ -83,6 +85,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         left: 0;
       } 
 
+    /*
       app-header-layout::after{
         background-color: rgb(25, 37, 80);
         content: '';
@@ -268,7 +271,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            --app-drawer-width:37%;
         };
 
-        .header-menu, .drawer__main-title{
+        .header-menu, .drawer__main-title, .drawer__button-logout{
           display: block;
         }
 
@@ -321,7 +324,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .drawer__user-grid{
           display: grid;
           grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
-          grid-template-rows: [topRow] 10em [centRow] 2em [botRow] minmax(16em,16em);
+          grid-template-rows: [topRow] 10em [centRow] 3em [botRow] minmax(16em,16em);
+          grid-row-gap: 1rem;
         }
 
         .drawer__user-container{
@@ -346,6 +350,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .drawer__button-logout{
           grid-column: centerCol;
           grid-row: centRow;
+        }
+
+        paper-button.drawer__button-logout{
+          width: 80px;
+          margin: 0 auto;
         }
         
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
@@ -378,8 +387,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="drawer__container">
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="view1" href="[[rootPath]]view1">Inicio</a>
-            <a name="view2" href="[[rootPath]]view2">Dónde</a>
-            <a name="view3" href="[[rootPath]]view3">El viaje</a>
+            <a name="view2" href="[[rootPath]]view2">El Lugar</a>
+            <a name="view3" href="[[rootPath]]view3">El Evento</a>
+            <a name="view4" href="[[rootPath]]view4">El Viaje</a>
           </iron-selector>
           <!-- Drawer login system -->
           <div class="drawer__login-grid" hidden$="{{signed}}">
@@ -391,10 +401,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <div class="drawer__user-grid" hidden$="{{!signed}}">
             <div class="drawer__user-container">
-             <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image>      
+             <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
+                  
             </div>         
               <tasks-element class="drawer__tasks"></tasks-element>             
-              <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button>
+               <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button> 
           </div>
         </div>
        
@@ -419,8 +430,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Header menu -->
           <paper-tabs class="header-menu" selected="{{page}}" attr-for-selected="name">
             <paper-tab name="view1">Inicio</paper-tab>
-            <paper-tab name="view2">Dónde</paper-tab>
-            <paper-tab name="view3">El viaje</paper-tab>
+            <paper-tab name="view2">El Lugar</paper-tab>
+            <paper-tab name="view3">El Evento</paper-tab>
+            <paper-tab name="view3">El Viaje</paper-tab>
           </paper-tabs>
 
           <!-- Account Dropdown  -->             
@@ -450,6 +462,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <my-view1 name="view1"></my-view1>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
+          <my-view4 name="view4"></my-view4>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
        
