@@ -1,0 +1,54 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="photo-gallery.html">
+
+    
+<dom-module id="photo-wall">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      /* CSS rules for your element */
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+        <photo-gallery height='180'>
+  <div class='item' data-url='https://i.pinimg.com/564x/c0/94/75/c09475fe570f8c07a7bc22a62b4faf89--travel-ideas-travel-inspiration.jpg'></div>
+  <div class='item' data-url='https://i.pinimg.com/474x/c6/af/3e/c6af3e8301391f858788e77c3b51f715--vacation-destinations-holiday-destinations.jpg'></div>
+  <div class='item' data-url='https://lh3.googleusercontent.com/-0mgbI6aXzyI/WhVpHou_nPI/AAAAAAAAErY/2DrEwl7YNp8DjsWt_2IQAyWoBN4ppZQbACJoC/w485-h303/gplus440193469.jpg'></div>
+  <div class='item' data-url='https://cdnw.elicdn.com/Blog/wp-content/uploads/2017/12/Jericoacoara.jpg'></div>
+
+
+ 
+  <div class='item' data-url='http://www.vdcviajes.com.ar/usr/images/78_galeria-jericoacoara-centrinho-dsc_0881.jpg'></div>
+  <div class='item' data-url='http://www.topbrasiltur.com.br/wp-content/uploads/2017/05/pacotes-para-jericoacoara-banner.jpg'></div>
+  <div class='item' data-url='http://hoteisabeiramar.com.br/wp-content/uploads/2013/06/noite-em-jericoacoara-01.jpg'></div>
+  <div class='item' data-url='http://s2.glbimg.com/ph3tyYxV_G8sml8uuAQhHhgoSgA=/smart/e.glbimg.com/og/ed/f/original/2016/07/11/c6kn1jjp.jpg'></div>
+  <div class='item' data-url='http://wwwra.ansa.it/webimages/ch_700/2017/7/2/ef78dc87fa01644d818eea3ef8d7ecd8.jpg'></div>
+</photo-gallery>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class PhotoWall extends Polymer.Element {
+
+      static get is() { return 'photo-wall'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+         
+        }
+      }
+
+      // Add methods to the element's public API
+    
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(PhotoWall.is, PhotoWall);
+  </script>
+
+</dom-module>

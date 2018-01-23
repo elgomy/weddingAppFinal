@@ -1,0 +1,45 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="shared-styles.html">
+
+<link rel="import" href="../elements/flight-elements/flight-search.html">
+
+<dom-module id="my-view4">
+  <template>
+    <style include="shared-styles">
+      :host {
+        display: block;
+        padding: 10px;
+      }
+
+      p{
+        text-align: justify;
+      } 
+    </style>
+
+    <div class="card">
+
+        <p>El evento será celebrado el dia 8 de septiembre en la Playa de Preá (Jericoacoara), que se encuentra a 287 km (4 horas en coche) del aeropuerto internacional de Fortaleza. Una vez confirmada tu presencia y la fecha de tu estancia, que puedes comunicarnos en esta misma página, nosotros nos encargaremos de gestionar el tránsfer desde Fortaleza hasta Jericoacoara.</p>
+        <p>Hacemos dos propuestas de viaje. La primera sería pasar unos días de relax en el paraíso de Jericoacora. Esta sería la opción más tranquila, ya que debe ser considerado que Jeri apenas tiene estructura turística, y las noches son tranquilas y los días son para pasarlos en la playa o paseando por sus maravillosas dunas. La segunda opción, más agitada, incluiría una primera parada en Rio de Janeiro, para después volar hasta Fortaleza y celebrar el evento. Esta segunda opción será la que nosotros realizaremos y a la que ya se han sumado algunos invitados, pasando en Rio las noches del 31 al 5, subiendo el 5 de Septiembre para Fortaleza. A continuación puedes buscar los precios de los vuelos en las fechas que serían más o menos las previstas, para que tengas una idea de los precios. Una vez que nos confirmes tu opción seleccionada y las fechas, te asesoraremos en lo que alojamiento hace referencia, ya que existen las opciones de reservar casas completas para grupos o habitaciones en posadas.</p>
+
+     <flight-search></flight-search>
+     
+  </template>
+
+  <script>
+    class MyView4 extends Polymer.Element {
+      static get is() { return 'my-view4'; }
+    }
+
+    window.customElements.define(MyView4.is, MyView4);
+  </script>
+</dom-module>

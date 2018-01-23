@@ -1,0 +1,252 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
+<link rel="import" href="../../src/my-icons.html">
+<link rel="import" href="../../bower_components/paper-collapse-item/paper-collapse-item.html">
+<link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
+
+<link rel="import" href="amchart-flight.html">
+<link rel="import" href="amchart-flight2.html">
+
+  
+<dom-module id="flight-search">
+  <!-- Optional shadow DOM template -->
+  <template>
+
+    <style>
+
+      :host{
+
+      }
+        
+      paper-collapse-item{
+        --paper-collapse-item-header: {
+            font-weight:bold;
+            color: var(--accent-color);
+            font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+        };
+      }
+    
+      paper-radio-button{
+        --paper-radio-button-checked-color: var(--accent-color);
+        --paper-radio-button-checked-ink-color: var(--accent-color);
+        --paper-radio-button-unchecked-color: var(--accent-color);
+        --paper-radio-button-unchecked-ink-color: var(--accent-color);
+        font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+      }
+
+      paper-button{
+        background: var(--accent-color);
+      } 
+
+      iron-icon.flight{
+        --iron-icon-fill-color: white;
+      }
+
+      .flight-search__map{
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        margin: 5px;
+        width: 300px;
+      }
+
+      date-picker{
+        --input-focus-background: var(--accent-color);
+      }
+
+      .date-calendar{
+        margin-top: 1.3rem;
+      }
+    
+    
+
+     @media (min-width: 1085px){
+        .flight-search__first-option{
+        display: grid;
+        grid-template-columns: [mapCol] 302px [searchCol] 2fr;
+        grid-column-gap: 1rem;
+     }
+
+     .flight-search__map{
+        grid-column: mapCol;
+     }
+
+     .flight-search__flights{
+        grid-column: searchCol;
+     }
+
+     }
+    </style>
+
+     <firebase-auth 
+          app-name="wedding-app"
+          id="auth" 
+          user="{{firebaseUser}}" 
+          signed-in="{{signed}}"
+          app="{{fbapp}}">
+      </firebase-auth>
+
+      <firebase-document
+        app-name="wedding-app"
+        path="/users/[[firebaseUser.uid]]/tripOption"
+        data="{{trip}}">
+      </firebase-document>
+
+       <firebase-document
+        app-name="wedding-app"
+        path="/users/[[firebaseUser.uid]]/tripDates"
+        data="{{dates}}">
+      </firebase-document>
+ 
+    <div class="wrapp__flight-search">
+
+        <paper-collapse-item>
+          <div slot="header">
+            Opción1: Bilbao-Jeri
+          </div>
+            <div class="flight-search__first-option">
+                <div class="flight-search__map">
+                    <amchart-flight2></amchart-flight2>
+                </div>
+
+                <div class="flight-search__flights">
+                    <div class="flight-search__flight">
+                        <p>Vuelos (total aprox. €650 - €700):</p>
+                        <p>
+                        <a href="https://book.flytap.com/air/TAPES/Calendar.aspx?pageTrace=21&market=ES&_l=es&requestID=5273563559146983047&flightType=Return&origin={{bilbao}}&destination={{fortaleza}}&negotiatedFaresOnly=False&maxConn=-1&depDate=05.09.2018&retDate=12.09.2018&adt=1&resident=&giftCode=&" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></iron-icon></paper-button></a>Bilbao-Fortaleza
+                        </p>
+                    </div>                          
+                </div>
+            </div>
+        </paper-collapse-item>
+      
+        <paper-collapse-item>
+          <div slot="header">
+            Opción2: Bilbao-Rio-Jeri
+          </div>
+             <div class="flight-search__first-option">
+                <div class="flight-search__map">
+                    <amchart-flight></amchart-flight>
+                </div>
+
+                <div class="flight-search__flights">
+                    <div class="flight-search__flight">
+                        <p>Vuelos (total aprox. €850):</p>
+                        <p>
+                        <a href="https://book.flytap.com/air/TAPES/Calendar.aspx?flightType=Single&_a=FTESes-ES&adt=1&chd=0&inf=0&_l=es&origin={{bilbao}}&destination={{rio}}&depDate=30.08.2018&depTime=0&retTime=0&resident=false&maxConn=-1&market=ES&cabinClass=Y&currency=&searchType=flexible&uh=20e6c26fa6ceb950b7da988e9700438e&tapid=1001-9441-1591-6129&" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></iron-icon></paper-button></a>Bilbao-Rio de Janeiro
+                        </p>
+                    </div>
+
+                    <div class="flight-search__flight">
+                        <p>
+                        <a href="https://www.edreams.es/#/results/type=O;dep=2018-09-05;from={{rio}};to={{fortaleza}};collectionmethod=false;airlinescodes=false;internalSearch=true" target="_blank"><paper-button raised><iron-icon class="flight" icon="my-icons:flight"></paper-button></a>Rio de Janeiro-Fortaleza
+                        </p>
+                    </div>
+
+                    <div class="flight-search__flight">
+                        <p>
+                        <a href="https://book.flytap.com/air/TAPES/Calendar.aspx?flightType=Single&_a=FTESes-ES&adt=1&_l=es&origin={{fortaleza}}&destination={{bilbao}}&depDate=11.09.2018&depTime=0&retTime=0&resident=&maxConn=-1&market=ES&cabinClass=Y&currency=&searchType=flexible&uh=20e6c26fa6ceb950b7da988e9700438e&tapid=1001-9441-1591-6129&giftCode=&negotiatedFaresOnly=False&" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></paper-button></a>Fortaleza-Bilbao
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </paper-collapse-item>
+
+    </div>
+
+    <div class="radio-group">
+      <span>Dinos qué opción vas a seleccionar:</span>
+      <div>
+        <paper-radio-group>
+          <paper-radio-button id="first" name="first" checked="{{trip.NoRio}}" on-change="checkToogle">opción 1</paper-radio-button>
+          <paper-radio-button id="second" name="second" checked="{{trip.Rio}}" on-change="checkToogle">opción 2</paper-radio-button>
+        </paper-radio-group>  
+      </div>
+    </div>
+
+    <div class="date-calendar">
+      <span>Dinos qué fechas piensas viajar:</span>
+      <div>
+        <date-picker auto-confirm id="goingCalendar" date="{{dates.goingDate}}"></date-picker><span>Ida</span>
+      </div>
+      <div>
+        <date-picker auto-confirm id="returnCalendar" date="{{dates.returnDate}}"></date-picker><span>Vuelta</span>
+      </div>
+    </div>
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class FligthSearch extends Polymer.Element {
+
+      static get is() { return 'flight-search'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+          bilbao: {
+            type: String,
+            value: "BIO"
+          },
+          rio: {
+            type: String,
+            value: "RIO"
+          },
+          fortaleza: {
+            type: String,
+            value: "FOR"
+          },
+
+          fbapp:Object,
+          trip: {
+            type:Object,
+            notify: true,
+            value(){
+              return{
+                Rio: '',
+                NoRio: ''
+              }
+            }
+          },
+          dates:{
+            type: Object,
+            value(){
+              return{
+                GoingFire:'',
+                ReturnFire:''
+              }
+            }
+          }
+        }
+      }
+       /**
+          * IMPORTANT: this method prevent both radio-buttons to be setted as 'true', and force to behave as real toogle button
+          * @param {e}
+          */
+      checkToogle(e){
+         if(e.currentTarget.id == 'first'){
+          this.set('trip.Rio', false)
+         } else if(e.currentTarget.id == 'second')
+          this.set('trip.NoRio', false)
+      }
+ 
+
+      toggle(){
+        this.$.collapse.toggle();
+      }
+
+      close(){
+        console.log('hola')
+      }
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(FligthSearch.is, FligthSearch);
+  </script>
+
+</dom-module>

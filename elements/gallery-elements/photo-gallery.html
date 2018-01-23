@@ -1,0 +1,99 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+
+<dom-module id='photo-gallery'>
+  <template>
+
+    <style>
+      :host {
+        display: block;
+      }
+
+      .grid {
+        display: flex;
+        flex-wrap: wrap;
+        margin: -4px;
+      }
+
+      .grid ::slotted(.item) {
+        flex-grow: 1;
+        margin: 4px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        cursor: pointer;
+      }
+
+     
+    </style>
+
+    <div class='grid'>
+      <slot id='grid'></slot>
+    </div>
+
+   
+
+
+  </template>
+  <script>
+    /**
+     * `photo-gallery`
+     * A photo gallery element based on Polymer
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class PhotoGallery extends Polymer.Element {
+      static get is () {
+        return 'photo-gallery'
+      }
+
+      static get properties () {
+        return {
+          height: {
+            type: Number,
+            value: 240
+          },
+    
+        }
+      }
+ 
+
+      getAspectRatio (url) {
+        let match = url.match(/aspect-ratio=([.\d]+)/)
+        return match ? parseFloat(match[1]) : 1
+      }
+
+      updateItemsStyle () {
+        this.items.forEach(item => {
+          let url = item.dataset.url
+          let aspectRatio = this.getAspectRatio(url)
+          item.style.width = this.height * aspectRatio + 'px'
+          item.style.height = this.height + 'px'
+          item.style.backgroundImage = `url(${url})`
+        })
+      }
+
+      updateItems () {
+        this.items = this.$.grid.assignedNodes()
+          .filter(node => node.nodeType === Node.ELEMENT_NODE)
+          .filter(node => node.classList.contains('item'))
+        this.updateItemsStyle()
+      }
+
+    
+
+      ready () {
+        super.ready()
+
+        let grid = this.$.grid
+        this.updateItems()
+        grid.addEventListener('slotchange', this.updateItems.bind(this))
+      }
+    }
+
+    window.customElements.define(PhotoGallery.is, PhotoGallery)
+
+  </script>
+</dom-module>

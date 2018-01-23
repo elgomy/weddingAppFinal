@@ -1,0 +1,82 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/polymerfire/polymerfire.html">
+    
+<dom-module id="tasks-element">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+	  
+	  paper-checkbox{
+	  	 font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+	  	 font-size: .9rem;
+       --paper-checkbox-label-color: var(--app-secondary-color);
+        --paper-checkbox-checked-color: var(--accent-color);
+        --paper-checkbox-checked-ink-color: var(--accent-color);
+        --paper-checkbox-unchecked-color: var(--accent-color);
+        --paper-checkbox-unchecked-ink-color: var(--accent-color);
+	  }
+
+    .tasks-wrapper{
+      display: grid;
+      grid-template-columns: [leftGap] 2rem [centCol] 1fr [rigthGap] 2rem;
+      grid-auto-rows:  1.4rem;
+      grid-row-gap: .4rem;
+      margin:0;
+     
+    }
+    
+    .check1, .check2, .check3{
+      grid-column: centCol;
+    }
+
+    </style>
+
+      <firebase-auth 
+          app-name="wedding-app"
+          id="auth" 
+          user="{{firebaseUser}}" 
+          signed-in="{{signed}}"
+          app="{{fbapp}}">
+      </firebase-auth>
+
+      <firebase-document
+        app-name="wedding-app"
+        path="/users/[[firebaseUser.uid]]/tasks"
+        data="{{task}}">
+      </firebase-document>
+
+  	
+    	<div class="container">
+    	 <div class="tasks-wrapper">
+    	   <paper-checkbox class="check1" checked="{{task.confirm}}" value="confirm">Confirmar presencia</paper-checkbox>
+    	   <paper-checkbox class="check2" checked="{{task.flight}}" value="flight">Reservar vuelo</paper-checkbox>
+    	   <paper-checkbox class="check3" checked="{{task.stay}}"" value="stay">Solicitar alojamiento</paper-checkbox>
+    	 </div>
+    	</div>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class TasksElement extends Polymer.Element {
+
+      static get is() { return 'tasks-element'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+         
+        }
+      }
+
+ 
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(TasksElement.is, TasksElement);
+  </script>
+
+</dom-module>
