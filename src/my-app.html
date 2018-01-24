@@ -33,6 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+<link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
@@ -104,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .drawer__container{
         display: grid;
-        grid-template-rows: [menuRow] 7rem [tasksRow] 7rem;
+        grid-template-rows: [menuRow] 10rem [tasksRow] 12rem;
         grid-row-gap: 2rem;
       }
          
@@ -150,6 +151,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: 50%;
         --iron-image-width:35px;
         --iron-image-height:35px;
+      }
+
+      .day-countdown__wrapper{
+        @apply(--layout-horizontal);         
+        @apply(--layout-around-justified);
+      }
+
+      .confirm-button__wrapper{
+        @apply(--layout-horizontal);         
+        @apply(--layout-around-justified);
+      }
+
+      .confirm-button__wrapper paper-button{
+        background: var(--accent-color);
+        color: #FFF;
+        font-weight: bold;
+      }
+
+      .drawer__tasks-wrapper{
+        margin-top: 1.5rem;
       }
 
       .account-drop{
@@ -258,8 +279,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       }
 
-
-
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
@@ -324,8 +343,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         .drawer__user-grid{
           display: grid;
-          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
-          grid-template-rows: [topRow] 10em [centRow] 3em [botRow] minmax(16em,16em);
+          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11rem, 15rem) [rightGap] 1fr;
+          grid-template-rows: [iconRow] 10rem [logBut] 2rem [countRow] 3rem [confBut] 3rem [botRow] minmax(16rem, 16rem);
           grid-row-gap: 1rem;
         }
 
@@ -334,7 +353,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           @apply(--layout-center-justified);
           @apply(--layout-center); 
           grid-column: centerCol;
-          grid-row: topRow;
+          grid-row: iconRow;
         }
 
         .drawer__user-image{
@@ -343,19 +362,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-radius: 50%;
         }
 
-        .drawer__tasks{
-          grid-column: centerCol;
-          grid-row: botRow;
-        }
-
         .drawer__button-logout{
           grid-column: centerCol;
-          grid-row: centRow;
+          grid-row: logBut;
+          border: 1px solid;
+          
         }
 
-        paper-button.drawer__button-logout{
-          width: 80px;
-          margin: 0 auto;
+        iron-icon.exitIcon{
+          --iron-icon-fill-color: var(--accent-color);
+          grid-column: centerCol;
+          grid-row: logBut;
+           margin: 0 auto;
+        }
+
+        .day-countdown__wrapper{
+          grid-column: centerCol;
+          grid-row: countRow;
+          
+        }
+
+        .confirm-button__wrapper{
+          grid-column: centerCol;
+          grid-row: confBut;
+           @apply(--layout-horizontal);
+          @apply(--layout-center-justified);
+        }
+
+        .drawer__tasks-wrapper{
+          display: block;
+          grid-column: centerCol;
+          grid-row: botRow;
         }
         
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
@@ -404,9 +441,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <div class="drawer__user-container">
              <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
                   
-            </div>         
-              <tasks-element class="drawer__tasks"></tasks-element>             
-               <paper-button raised on-tap="logout" class="drawer__button-logout">logout</paper-button> 
+            </div>  
+              <div class="day-countdown__wrapper">
+                <day-countdown></day-countdown>  
+              </div>  
+              <div class="confirm-button__wrapper">
+                <paper-button raised on-tap="confirm">Anímate!</paper-button>
+              </div> 
+              <div class="drawer__tasks-wrapper">
+                <tasks-element class="drawer__tasks"></tasks-element>
+              </div>  
+                        
+                <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
+                <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
+
           </div>
         </div>
        
@@ -446,8 +494,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     [[user.email]]
                   </div>
                   <div class="account-drop__actions" id="actions">
-                    <a href="view3"><paper-button>Account</paper-button></a>
-                    <paper-button on-tap="logout">Log out</paper-button>
+                    <a href="view3"><paper-button>Cuenta</paper-button></a>
+                    <paper-button on-tap="logout">Salir</paper-button>
                   </div>
                 </div>      
             </div>
@@ -473,7 +521,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Login dialog -->
     <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
       <h2 class="login-dialog__header">
-        <span>Welcome</span> 
+        <span>Brasiiiil na na na nanan</span> 
         <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
       </h2>
       <div class="login-dialog__admin">
@@ -512,6 +560,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         path="/users/{{user.uid}}" 
         data="{{userProfile}}">
     </firebase-document>
+
+     <firebase-document
+        app-name="wedding-app"
+        path="/users/[[user.uid]]/tasks"
+        data="{{task}}">
+      </firebase-document>
 
   </template>
 
@@ -636,8 +690,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }.bind(this))
       }
 
-
-
+      confirm(){
+        this.set('task.confirm',true)
+      }
 
     }
 

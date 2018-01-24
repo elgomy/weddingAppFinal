@@ -28,7 +28,8 @@
     "paper-collapse-item": "Collaborne/paper-collapse-item#^2.2.0",
     "paper-radio-group": "PolymerElements/paper-radio-group#^2.0.0",
     "iron-input": "PolymerElements/iron-input#^2.0.1",
-    "datetime-picker": "fooloomanzoo/datetime-picker#^2.6.5"
+    "datetime-picker": "fooloomanzoo/datetime-picker#^2.6.5",
+    "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.1"
   },
   "resolutions": {
     "polymer": "^2.0.0"
