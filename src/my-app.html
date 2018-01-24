@@ -269,7 +269,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-align: center;
       }
 
-      .header-menu, .drawer__login-grid, .drawer__main-title, .drawer__user-container, .drawer__button-logout{
+      .header-menu, .drawer__login-grid, .drawer__main-title, .drawer__user-container, .drawer__button-logout, .exitIcon{
           display: none;
         }
 
@@ -289,7 +289,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .celebrating-wrap{
         width: 200px;
-
       }
 
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
@@ -325,10 +324,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           display: none;
         }
 
-         /* height added to paper-tabs header menu height */
         app-toolbar.header__toolbar{
-           display: none;
-        }
+           display: none      
+         }
 
         .drawer__login-grid{
           display: grid;
@@ -386,7 +384,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           --iron-icon-fill-color: var(--accent-color);
           grid-column: centerCol;
           grid-row: logBut;
-           margin: 0 auto;
+          margin: 0 auto;
+          display: block;
         }
 
         .day-countdown__wrapper{
@@ -476,16 +475,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           </div>
         </div>
-       
-        
+              
       </app-drawer>
 
       <!-- Main content -->
-      <app-header-layout has-scrolling-region>
+      <app-header-layout has-scrolling-region>    
 
-       
-
-        <app-header slot="header" condenses reveals effects="waterfall">
+        <app-header slot="header" condenses effects="waterfall">
 
           <app-toolbar class="header__toolbar">
             <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
@@ -542,7 +538,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Login dialog -->
     <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
       <h2 class="login-dialog__header">
-        <span>Brasil espera</span> 
+        <span>Vamos pá Brasil</span> 
         <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
       </h2>
       <div class="login-dialog__admin">
