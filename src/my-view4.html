@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 
 <link rel="import" href="../elements/flight-elements/flight-search.html">
+<link rel="import" href="../elements/hotels-element.html">
 
 <dom-module id="my-view4">
   <template>
@@ -24,6 +25,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       p{
         text-align: justify;
       } 
+
+      h3{
+        color: var(--accent-color);
+      }
     </style>
 
     <div class="card">
@@ -32,6 +37,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <p>Hacemos dos propuestas de viaje. La primera sería pasar unos días de relax en el paraíso de Jericoacora. Esta sería la opción más tranquila, ya que debe ser considerado que Jeri apenas tiene estructura turística, y las noches son tranquilas y los días son para pasarlos en la playa o paseando por sus maravillosas dunas. La segunda opción, más agitada, incluiría una primera parada en Rio de Janeiro, para después volar hasta Fortaleza y celebrar el evento. Esta segunda opción será la que nosotros realizaremos y a la que ya se han sumado algunos invitados, pasando en Rio las noches del 31 al 5, subiendo el 5 de Septiembre para Fortaleza. A continuación puedes buscar los precios de los vuelos en las fechas que serían más o menos las previstas, para que tengas una idea de los precios. Una vez que nos confirmes tu opción seleccionada y las fechas, te asesoraremos en lo que alojamiento hace referencia, ya que existen las opciones de reservar casas completas para grupos o habitaciones en posadas.</p>
 
      <flight-search></flight-search>
+   </div>
+
+   <div class="card">
+
+        <h3>Alojamiento</h3>
+        <p>Listamos alojamientos para Jericoacoara, Preá (evento), y Rio de Janeiro</p>
+        <p>Los alojamientos listados abajo son un ejemplo del precio de 1 noche (en el caso de Booking 1 cuarto para 2 personas y en el caso de Airbnb casas enteras), apenas para tener una referencia. También debe ser considerado que para Jeri y Preá consideramos como noche la del 8 de septiembre, el día del evento, que puede ser más cara por tratarse de un día de puente en Brasil. Aunque también mostramos alojamientos en Preá, recomendamos alojarse en Jeri, ya que es más céntrica, y Preá se encuentra a 14 km de ésta. Podría ser interesante alojarse en Preá apenas el día 8, día de la fiesta. Las opciones listadas por Airbnb son para casas completas, por lo que en el caso de poder alojar a grupos, puede salir más económico, por lo que sería importante que nos confirmárais las fechas y las opciones que hemos listado anteriormente en esta sección. Obviamente podéis contar con nuestro asesoramiento respecto a la mejor localización, etc.</p>
+
+    <hotels-element></hotels-element>
+     
+
+   </div>
      
   </template>
 

@@ -9,6 +9,7 @@
 <link rel="import" href="amchart-flight.html">
 <link rel="import" href="amchart-flight2.html">
 
+
   
 <dom-module id="flight-search">
   <!-- Optional shadow DOM template -->
@@ -17,7 +18,11 @@
     <style>
 
       :host{
+        
+      }
 
+      p{
+        font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
       }
         
       paper-collapse-item{
@@ -38,6 +43,7 @@
 
       paper-button{
         background: var(--accent-color);
+        height: 1.8rem;
       } 
 
       iron-icon.flight{
@@ -176,6 +182,8 @@
         <date-picker auto-confirm id="returnCalendar" date="{{dates.returnDate}}"></date-picker><span>Vuelta</span>
       </div>
     </div>
+
+    
   </template>
 
   <script>
