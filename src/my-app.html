@@ -253,6 +253,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply(--layout-around-justified);
       }
 
+     
+
       paper-toast.positiveToast{
         --paper-toast-background-color: #4caf50;
         --paper-toast-color: #ffffff;
@@ -277,6 +279,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .drawer__tasks-container{
         margin-top: 3rem;
+      }
+
+       .celebrating-dialog{
+        width: 20rem;
+        height: 0.3rem;
+        background: rgba(54, 25, 25, .00004);
+      }
+
+      .celebrating-wrap{
+        width: 200px;
 
       }
 
@@ -444,18 +456,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
                   
             </div>  
-              <div class="day-countdown__wrapper">
-                <day-countdown></day-countdown>  
-              </div>  
-              <div class="confirm-button__wrapper">
+              <template is="dom-if" if="{{!task.confirm}}">
+                <div class="day-countdown__wrapper">
+                  <day-countdown></day-countdown>  
+                </div>  
+                <div class="confirm-button__wrapper">
                 <paper-button raised on-tap="confirm">Anímate!</paper-button>
-              </div> 
-              <div class="drawer__tasks-wrapper">
-                <tasks-element class="drawer__tasks"></tasks-element>
-              </div>  
-                        
-                <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
-                <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
+                </div> 
+              </template>
+              
+              <template is="dom-if" if="{{task.confirm}}">
+                <div class="drawer__tasks-wrapper"> 
+                  <tasks-element class="drawer__tasks"></tasks-element>    
+                </div>  
+              </template>  
+
+              <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
+              <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
 
           </div>
         </div>
@@ -525,13 +542,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Login dialog -->
     <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
       <h2 class="login-dialog__header">
-        <span>Brasiiiil na na na nanan</span> 
+        <span>Brasil espera</span> 
         <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
       </h2>
       <div class="login-dialog__admin">
         <login-admin></login-admin>
       </div> 
-     </paper-dialog>
+    </paper-dialog>
+
+      <!-- Celebration dialog -->
+    <paper-dialog modal id="dialogCeleb" class="celebrating-dialog" vertical-align="top" horizontal-align="center">  
+      <div>
+          <dancing-letters></dancing-letters>
+      </div> 
+      <div class="celebrating-wrap">
+          <celebrating-element></celebrating-element>
+      </div>
+    </paper-dialog> 
+
+
 
 
      <!--toast -->
@@ -695,8 +724,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       confirm(){
+        this.$.dialogCeleb.toggle();
+        setTimeout(() => {
+           this.$.dialogCeleb.close()
+        }, 5000);
         this.set('task.confirm',true)
       }
+
 
     }
 
