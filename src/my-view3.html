@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 
+<link rel="import" href="../elements/gallery-elements/photo-wall2.html">
+
 <dom-module id="my-view3">
   <template>
     <style include="shared-styles">
@@ -19,9 +21,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         padding: 10px;
       }
+
+       p{
+        text-align: justify;
+      }
     </style>
 
     <div class="card">
+      <p>Queremos dejar claro que nuestro evento no será la típica ceremonia, sino más bien va a ser una fiesta rodeados de amigos, evidentemente con música, bebida típica brasileira y gastronomía de la región.</p>
+      <p>Respecto a la vestimenta, ven lo más informal que puedas, ya que no te olvides que la fiesta será en la playa!!.</p>
+      <p>Esa noche, la bonita posada Vila Preamar, estará a nuestra entera disposicion para celebrar el evento y pasarlo genial:</p>
+    </div>
+
+    <div class="card">
+      <photo-wall2></photo-wall2>
+    </div>
      
   </template>
 
