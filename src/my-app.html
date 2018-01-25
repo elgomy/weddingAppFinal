@@ -39,6 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
 
 
 <link rel="import" href="../elements/elements-import.html">
@@ -355,8 +356,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .drawer__user-grid{
           display: grid;
           grid-template-columns: [leftGap] 1fr [centerCol] minmax(11rem, 15rem) [rightGap] 1fr;
-          grid-template-rows: [iconRow] 10rem [logBut] 1rem [countRow] 2rem [confBut] 3rem [botRow] minmax(16rem, 16rem);
-          grid-row-gap: 0.7rem;
+          grid-template-rows: [iconRow] 10rem [logBut] 1.7rem [countRow] 2rem [confBut] 3rem [botRow] minmax(16rem, 16rem);
+          grid-row-gap: 0.8rem;
         }
 
         .drawer__user-container{
@@ -373,18 +374,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           border-radius: 50%;
         }
 
-        .drawer__button-logout{
+        .drawer__actions{
           grid-column: centerCol;
           grid-row: logBut;
-          border: 1px solid;
-          
+          @apply(--layout-vertical);
+          @apply(--layout-center);       
         }
 
         iron-icon.exitIcon{
-          --iron-icon-fill-color: var(--accent-color);
-          grid-column: centerCol;
-          grid-row: logBut;
-          margin: 0 auto;
+          --iron-icon-fill-color: var(--accent-color);        
           display: block;
         }
 
@@ -405,7 +403,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           display: block;
           grid-column: centerCol;
           grid-row: botRow;
+
         }
+
         
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
         [hidden]{
@@ -445,7 +445,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Drawer login system -->
           <div class="drawer__login-grid" hidden$="{{signed}}">
             <div class="drawer__avatar-container">
-              <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon>  
+              <iron-icon icon="my-icons:account-circle" class="drawer__avatar-icon"></iron-icon> 
+              
             </div>        
               <login-admin class="drawer__login-admin"></login-admin>     
           </div>
@@ -453,8 +454,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <div class="drawer__user-grid" hidden$="{{!signed}}">
             <div class="drawer__user-container">
              <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
-                  
-            </div>  
+
+           </div>  
               <template is="dom-if" if="{{!task.confirm}}">
                 <div class="day-countdown__wrapper">
                   <day-countdown></day-countdown>  
@@ -469,9 +470,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   <tasks-element class="drawer__tasks"></tasks-element>    
                 </div>  
               </template>  
-
-              <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
-              <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
+              
+              <div class="drawer__actions">
+                <paper-spinner-lite class="drawer__spinner" active="{{!userProfile.photoURL}}" alt="sign in processing"></paper-spinner-lite>
+                <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
+                <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
+                 
+              </div>
 
           </div>
         </div>
