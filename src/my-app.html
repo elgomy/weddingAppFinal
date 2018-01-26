@@ -57,15 +57,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           /* responsive drawer. IMP: to work properly it must be included in :host; */
       }
 
-      @font-face {
-        font-family: 'chunkyfont';
-        src: url('../fonts/chunkyfont-webfont.eot'), /* IE9 Compat Modes */
-        url('../fonts/chunkyfont-webfont.woff2') format('woff2'), /* Super Modern Browsers */
-        url('../fonts/chunkyfont-webfont.woff') format('woff'), /* Pretty Modern Browsers */
-        url('../fonts/chunkyfont-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
-        url('../fonts/chunkyfont-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
-}
-
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
       }
@@ -91,8 +82,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 100%;
         height: 100%;
       }
-
-
 
       app-header-layout::before{
         background-color: rgb(242, 55, 115); /* rgb(240, 14, 46);  */
@@ -209,8 +198,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 1rem;
         padding: 0;
         background-color: white; 
-        border-radius: 10px;
-          
+        border-radius: 10px;          
       }
 
       .account-drop__photo{
@@ -220,8 +208,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius: 50%;
         margin-right: 5px;
         width: 65px;
-        height: 65px;
-       
+        height: 65px;      
       }
 
       .account-drop__actions{
@@ -249,8 +236,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         padding:10px;
         color:black;
         @apply --layout-vertical;         
-        @apply --layout-around-justified;
-        
+        @apply --layout-around-justified;       
       }
 
       .login-dialog{
@@ -259,8 +245,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius:10px;
         height: auto;
         display: grid;
-        grid-template-rows: 5rem 1fr;
-        
+        grid-template-rows: 5rem 1fr;       
       }
 
       .login-dialog__header{
@@ -309,6 +294,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 200px;
       }
 
+      app-toolbar iron-image{
+        --iron-image-width: 10rem;
+      }
+
+      .spacer{
+        display: none;
+      }
+
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
@@ -345,12 +338,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         app-toolbar.header__toolbar{
            display: none      
          }
-
-        .drawer__main-title{
-        color: var(--accent-color);
-        font-family: 'chunkyfont';
-        font-size: 2rem;
-      }
 
         .drawer__login-grid{
           display: grid;
@@ -428,6 +415,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           grid-row: botRow;
 
         }
+
+        .spacer{
+          display: block;
+      }
       
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
         [hidden]{
@@ -453,7 +444,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <!--//////////////////////// Drawer content  ///////////////////////////////////////////////-->
       <app-drawer id="drawer" slot="drawer" no-focus-trap>
         <app-toolbar>
-          <div main-title spacer class="drawer__main-title">GomiVia</div>
+          <div class="spacer" spacer></div>
+          <iron-image src="../images/logo.png"></iron-image> 
         </app-toolbar>
 
         <div class="drawer__container">
@@ -511,7 +503,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <app-toolbar class="header__toolbar">
             <paper-icon-button class="header__menu-icon" icon="my-icons:menu" drawer-toggle></paper-icon-button>
-            <div main-title spacer class="header__main-title">Gomivia</div>
+            <div main-title spacer class="header__main-title"></div>
 
             <iron-icon on-tap="dialogLogin" icon="my-icons:account-circle" hidden$="{{signed}}" class="account-icon"></iron-icon> 
             <iron-image loaded="{{loaded}}" hidden$="{{!signed}}" on-tap="dropAccount" src="[[userProfile.photoURL]]" class="account-image"></iron-image>

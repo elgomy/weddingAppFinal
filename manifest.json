@@ -1,7 +1,7 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "GomiVia",
+  "short_name": "GomiVia",
+  "description": "My wedding App",
   "icons": [
     {
       "src": "images/manifest/icon-192x192.png",
