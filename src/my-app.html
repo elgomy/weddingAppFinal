@@ -45,6 +45,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../elements/elements-import.html">
 
 
+
+
 <dom-module id="my-app">
   <template>
     <style>
@@ -54,6 +56,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;      
           /* responsive drawer. IMP: to work properly it must be included in :host; */
       }
+
+      @font-face {
+        font-family: 'chunkyfont';
+        src: url('../fonts/chunkyfont-webfont.eot'), /* IE9 Compat Modes */
+        url('../fonts/chunkyfont-webfont.woff2') format('woff2'), /* Super Modern Browsers */
+        url('../fonts/chunkyfont-webfont.woff') format('woff'), /* Pretty Modern Browsers */
+        url('../fonts/chunkyfont-webfont.ttf')  format('truetype'), /* Safari, Android, iOS */
+        url('../fonts/chunkyfont-webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
 
       app-drawer-layout:not([narrow]) [drawer-toggle] {
         display: none;
@@ -81,8 +92,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         height: 100%;
       }
 
+
+
       app-header-layout::before{
-        background-color: rgb(240, 14, 46); /* rgb(240, 14, 46); */
+        background-color: rgb(242, 55, 115); /* rgb(240, 14, 46);  */
         content: '';
         display: block;
         width: 100%;
@@ -93,7 +106,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         left: 0;
       } 
 
-    /*
+/*
+    
       app-header-layout::after{
         background-color: rgb(25, 37, 80);
         content: '';
@@ -105,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         top: 0;
         left: 0;
         overflow-y: auto;
-      }
+      } */
 
   /* /////////////////////////////////////////////////// */
 
@@ -146,6 +160,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* Added styles */
 
       /* Login styles */
+
 
       .account-icon{
         --iron-icon-width:35px;     
@@ -331,6 +346,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
            display: none      
          }
 
+        .drawer__main-title{
+        color: var(--accent-color);
+        font-family: 'chunkyfont';
+        font-size: 2rem;
+      }
+
         .drawer__login-grid{
           display: grid;
           grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
@@ -345,7 +366,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           grid-row: topRow;
         }
 
-         .drawer__avatar-icon{
+        .drawer__avatar-icon{
           --iron-icon-width:100px;     
           --iron-icon-height:100px;    
         }
@@ -407,8 +428,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           grid-row: botRow;
 
         }
-
-        
+      
         /* set hidden to display:none to optimize hidden$ atribute rendering */;
         [hidden]{
           display: none;
@@ -430,10 +450,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </app-route>
      <!-- set 'fullbleed' to ocuppy total body space. Important -->
     <app-drawer-layout fullbleed>
-      <!-- Drawer content -->
+      <!--//////////////////////// Drawer content  ///////////////////////////////////////////////-->
       <app-drawer id="drawer" slot="drawer" no-focus-trap>
         <app-toolbar>
-          <div main-title spacer class="drawer__main-title">Gomivia</div>
+          <div main-title spacer class="drawer__main-title">GomiVia</div>
         </app-toolbar>
 
         <div class="drawer__container">
@@ -476,8 +496,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="drawer__actions">
                 <paper-spinner-lite class="drawer__spinner" active="{{!userProfile.photoURL}}" alt="sign in processing"></paper-spinner-lite>
                 <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
-                <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>
-                 
+                <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>          
               </div>
 
           </div>
@@ -485,7 +504,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               
       </app-drawer>
 
-      <!-- Main content -->
+      <!--  ///////////////////////////////// Main content ///////////////////////////////////// -->
       <app-header-layout has-scrolling-region>    
 
         <app-header slot="header" condenses effects="waterfall">
@@ -563,9 +582,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
     </paper-dialog> 
 
-
-
-
      <!--toast -->
     <paper-toast id="positiveToast" class="positiveToast" duration="4000"></paper-toast>
     <paper-toast id="negativeToast" class="negativeToast" duration="4000"></paper-toast>
@@ -627,6 +643,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           * @type {Object}
           */ 
           fbapp:Object,
+          user: Object,
+          signed: Object,
+          userProfile: Object,
+          task:Object
        
         };
       }
