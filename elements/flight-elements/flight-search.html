@@ -5,6 +5,7 @@
 <link rel="import" href="../../src/my-icons.html">
 <link rel="import" href="../../bower_components/paper-collapse-item/paper-collapse-item.html">
 <link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
 <link rel="import" href="amchart-flight.html">
 <link rel="import" href="amchart-flight2.html">
@@ -47,7 +48,7 @@
       } 
 
       iron-icon.flight{
-        --iron-icon-fill-color: white;
+        --iron-icon-fill-color: #ffffff;
       }
 
       .flight-search__map{
@@ -87,20 +88,20 @@
      <firebase-auth 
           app-name="wedding-app"
           id="auth" 
-          user="{{firebaseUser}}" 
+          user="{{user}}" 
           signed-in="{{signed}}"
           app="{{fbapp}}">
       </firebase-auth>
 
       <firebase-document
         app-name="wedding-app"
-        path="/users/[[firebaseUser.uid]]/tripOption"
+        path="/users/[[user.uid]]/tripOption"
         data="{{trip}}">
       </firebase-document>
 
        <firebase-document
         app-name="wedding-app"
-        path="/users/[[firebaseUser.uid]]/tripDates"
+        path="/users/[[user.uid]]/tripDates"
         data="{{dates}}">
       </firebase-document>
  
@@ -208,7 +209,7 @@
             type: String,
             value: "FOR"
           },
-
+          signed:Boolean,
           fbapp:Object,
           trip: {
             type:Object,

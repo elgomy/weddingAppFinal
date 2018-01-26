@@ -1,0 +1,47 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="photo-gallery.html">
+
+    
+<dom-module id="photo-wall2">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      /* CSS rules for your element */
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+        <photo-gallery height='180'>
+  <div class='item' data-url='http://reservar-hoteis-brasil.com/wp-content/uploads/La-Villa-Jericoacoara-Jericoacoara-Ceara.jpg?189db0&189db0'></div>
+  <div class='item' data-url='https://s-ec.bstatic.com/images/hotel/max400/111/111862851.jpg'></div>
+  <div class='item' data-url='https://media-cdn.tripadvisor.com/media/photo-s/0c/dd/08/aa/vila-preamar-surf-bar.jpg'></div>
+  <div class='item' data-url='https://media-cdn.tripadvisor.com/media/photo-s/0e/2c/87/63/photo1jpg.jpg'></div>
+  <div class='item' data-url='http://www.reservehotelonline.com.br/resources/img/br/prea-br/vila-preamar.jpg'></div>
+</photo-gallery>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class PhotoWall2 extends Polymer.Element {
+
+      static get is() { return 'photo-wall2'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+         
+        }
+      }
+
+      // Add methods to the element's public API
+    
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(PhotoWall2.is, PhotoWall2);
+  </script>
+
+</dom-module>

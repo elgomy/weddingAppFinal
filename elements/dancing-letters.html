@@ -1,0 +1,115 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+    
+<dom-module id="dancing-letters">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      	div {
+  padding: 10px 25px;
+  margin: 10px; 
+}
+
+div.main-div {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 50px;
+  text-align: center;
+  font-weight: bold;
+  height: 5px;
+   }
+
+div.main-div div {
+  display: inline-block;
+  margin: 50px 10px;
+}
+
+.first {
+  color: darkviolet;
+  animation: swag 3s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite 0.4s;
+}
+
+.second {
+  color: cyan;
+  animation: swag 2.4s cubic-bezier(0.6, 0.04, 0.98, 0.335) infinite 0.3s;
+}
+
+.third {
+  color: chartreuse;
+  animation: swag 2s cubic-bezier(0.6, -0.28, 0.735, 0.045) infinite 0.8s;
+}
+
+.forth {
+  color: deeppink;
+  animation: swag 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite 0.2s;
+}
+
+@-webkit-keyframes swag {
+    form {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-moz-keyframes swag {
+    form {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-o-keyframes swag {
+    form {
+        -o-transform: rotate(0deg);
+    }
+    to {
+        -o-transform: rotate(360deg);
+    }
+}
+@keyframes swag {
+    form {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+     <div class="main-div">
+      <div class="first">Y</div>
+      <div class="second">E</div>
+      <div class="third">A</div>
+      <div class="forth">H</div>
+    </div>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class DancingLetters extends Polymer.Element {
+
+      static get is() { return 'dancing-letters'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+         
+        }
+      }
+
+      // Add methods to the element's public API
+     
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(DancingLetters.is, DancingLetters);
+  </script>
+
+</dom-module>

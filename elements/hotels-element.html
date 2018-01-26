@@ -1,0 +1,92 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../src/my-icons.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+    
+<dom-module id="hotels-element">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+     paper-button{
+        background: var(--accent-color);
+        height: 1.8rem;
+      } 
+
+      iron-icon.hotel{
+        --iron-icon-fill-color: white;
+      }
+
+      h4{
+      	font-weight: bold;
+      }
+
+      span{
+      	font-size: 0.9rem;
+      }
+    </style>
+  
+
+    <!-- shadow DOM for your element -->
+	<div class="jeri">
+	<h4>Jericoacoara:</h4>
+		<div>
+    		<a href="https://www.booking.com/searchresults.es.html?aid=354409&label=jericoacoara-vujdLCj9nIl56gq8dBBdEAS100770479343%3Apl%3Ata%3Ap1170%3Ap2%3Aac%3Aap1t1%3Aneg%3Afi%3Atiaud-285284111406%3Akwd-13432752843%3Alp1001566%3Ali%3Adec%3Adm&sid=09d1c86bbaa74888ca56cbcff2dd5337&checkin_month=9&checkin_monthday=8&checkin_year=2018&checkout_month=9&checkout_monthday=9&checkout_year=2018&city=-649321&class_interval=1&dest_id=-649321&dest_type=city&from_sf=1&group_adults=2&group_children=0&label_click=undef&no_rooms=1&raw_dest_type=city&room1=A%2CA&sb_price_type=total&src_elem=sb&ssb=empty&ssne_untouched=Jericoacoara&order=price" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></iron-icon></paper-button></a><span>Booking</span>
+		</div>
+		<div>
+    		<a href="https://es.airbnb.com/s/Jericoacoara--Cear%C3%A1--Brasil/homes?checkin=2018-09-08&checkout=2018-09-09&adults=2&place_id=ChIJhaZBB4iG6QcRB38ggdjaV54&query=Jericoacoara%2C%20Cear%C3%A1%2C%20Brasil&refinement_paths%5B%5D=%2Ffor_you&allow_override%5B%5D=&room_types%5B%5D=Entire%20home%2Fapt&s_tag=IpDjc4ui" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></paper-button></iron-icon></a><span>Airbnb</span>
+    	</div>
+	</div>
+
+	<div class="prea">
+	<h4>Prea:</h4>
+		<div>
+    		<a href="https://www.booking.com/searchresults.es.html?aid=354409&label=jericoacoara-vujdLCj9nIl56gq8dBBdEAS100770479343%3Apl%3Ata%3Ap1170%3Ap2%3Aac%3Aap1t1%3Aneg%3Afi%3Atiaud-285284111406%3Akwd-13432752843%3Alp1001566%3Ali%3Adec%3Adm&sid=09d1c86bbaa74888ca56cbcff2dd5337&checkin_month=9&checkin_monthday=8&checkin_year=2018&checkout_month=9&checkout_monthday=9&checkout_year=2018&city=-649321&class_interval=1&dest_id=900049438&dest_type=city&dtdisc=0&from_sf=1&group_adults=2&group_children=0&inac=0&index_postcard=0&label_click=undef&no_rooms=1&postcard=0&raw_dest_type=city&room1=A%2CA&sb_price_type=total&search_selected=1&src_elem=sb&ss=Prea%2C%20Cear%C3%A1%2C%20Brasil&ss_all=0&ss_raw=prea&ssb=empty&sshis=0&ssne_untouched=Jericoacoara&order=price" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></paper-button></iron-icon></a><span>Booking</span>
+		</div>
+		<div>
+    		<a href="https://es.airbnb.com/s/Pre%C3%A1--CE/homes?checkin=2018-09-08&checkout=2018-09-09&adults=2&place_id=ChIJI6vDBgqJ6QcReKQCm_foMwE&query=Jericoacoara%2C%20Cear%C3%A1%2C%20Brasil&refinement_paths%5B%5D=%2Ffor_you&allow_override%5B%5D=&room_types%5B%5D=Entire%20home%2Fapt&s_tag=AfDazz2-" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></paper-button></iron-icon></a><span>Airbnb</span>
+    	</div>
+	</div>
+
+	<div class="rio">
+	<h4>Rio (Ipanema):</h4>
+		<div>
+    		<a href="https://www.booking.com/searchresults.es.html?aid=354409&label=jericoacoara-vujdLCj9nIl56gq8dBBdEAS100770479343%3Apl%3Ata%3Ap1170%3Ap2%3Aac%3Aap1t1%3Aneg%3Afi%3Atiaud-285284111406%3Akwd-13432752843%3Alp1001566%3Ali%3Adec%3Adm&sid=09d1c86bbaa74888ca56cbcff2dd5337&checkin_month=8&checkin_monthday=31&checkin_year=2018&checkout_month=9&checkout_monthday=1&checkout_year=2018&class_interval=1&dest_id=1793&dest_type=district&district=1793&dtdisc=0&from_sf=1&group_adults=2&group_children=0&inac=0&index_postcard=0&label_click=undef&no_rooms=1&postcard=0&room1=A%2CA&sb_price_type=total&src_elem=sb&ss=Ipanema&ss_all=0&ssb=empty&sshis=0&ssne=Ipanema&ssne_untouched=Ipanema&order=price" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></paper-button></iron-icon></a><span>Booking</span>
+		</div>
+		<div>
+    		<a href="https://es.airbnb.com/s/Ipanema--R%C3%ADo-de-Janeiro--Estado-de-R%C3%ADo-de-Janeiro--Brasil/homes?checkin=2018-08-31&checkout=2018-09-01&adults=2&place_id=ChIJkWFy_g_VmwARe6ZZnNoVArs&query=Jericoacoara%2C%20Cear%C3%A1%2C%20Brasil&refinement_paths%5B%5D=%2Ffor_you&allow_override%5B%5D=&room_types%5B%5D=Entire%20home%2Fapt&s_tag=sQRw-DPF" target="_blank">
+    		<paper-button raised><iron-icon class="hotel" icon="my-icons:hotel"></paper-button></iron-icon></a><span>Airbnb</span>
+    	</div>
+	</div>
+
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class HotelsElement extends Polymer.Element {
+
+      static get is() { return 'hotels-element'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+         
+        }
+      }
+
+      // Add methods to the element's public API
+    
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(HotelsElement.is, HotelsElement);
+  </script>
+
+</dom-module>

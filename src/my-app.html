@@ -51,10 +51,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         --app-primary-color: #4285f4;
         --app-secondary-color: #000;
-
         display: block;      
           /* responsive drawer. IMP: to work properly it must be included in :host; */
-       
       }
 
       app-drawer-layout:not([narrow]) [drawer-toggle] {
@@ -65,9 +63,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: #fff;    
       }
 
-      app-header paper-icon-button {
-        --paper-icon-button-ink-color: white;
+      app-header paper-icon-button{
+        background: white;
+        color:var(--accent-color);
       }
+
+        app-header iron-icon{
+        background: white;
+        color:var(--accent-color);
+      }    
 
     /* Body background image with duotone effect */
       app-header-layout{
@@ -78,7 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       app-header-layout::before{
-        background-color: rgb(240, 14, 46);
+        background-color: rgb(240, 14, 46); /* rgb(240, 14, 46); */
         content: '';
         display: block;
         width: 100%;
@@ -156,13 +160,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       .day-countdown__wrapper{
-        @apply(--layout-horizontal);         
-        @apply(--layout-around-justified);
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
       }
 
       .confirm-button__wrapper{
-        @apply(--layout-horizontal);         
-        @apply(--layout-around-justified);
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
       }
 
       .confirm-button__wrapper paper-button{
@@ -212,8 +216,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         text-decoration: none;
         border-top: 1px solid #b0bec5;       
         border-radius: 0px 0px 10px 10px;
-        @apply(--layout-horizontal);         
-        @apply(--layout-around-justified);
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
       }
 
       .account-drop__actions a{
@@ -229,8 +233,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         grid-row: 2/3;
         padding:10px;
         color:black;
-        @apply(--layout-vertical);         
-        @apply(--layout-around-justified);
+        @apply --layout-vertical;         
+        @apply --layout-around-justified;
         
       }
 
@@ -250,11 +254,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         border-radius:10px 10px 0px 0px;
         background: var(--accent-color);
         color:white;
-        @apply(--layout-horizontal);         
-        @apply(--layout-around-justified);
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
       }
-
-     
 
       paper-toast.positiveToast{
         --paper-toast-background-color: #4caf50;
@@ -336,9 +338,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         .drawer__avatar-container{
-          @apply(--layout-horizontal);
-          @apply(--layout-center-justified);
-          @apply(--layout-center); 
+          @apply --layout-horizontal;
+          @apply --layout-center-justified;
+          @apply --layout-center; 
           grid-column: centerCol;
           grid-row: topRow;
         }
@@ -361,9 +363,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
 
         .drawer__user-container{
-          @apply(--layout-horizontal);
-          @apply(--layout-center-justified);
-          @apply(--layout-center); 
+          @apply --layout-horizontal;
+          @apply --layout-center-justified;
+          @apply --layout-center; 
           grid-column: centerCol;
           grid-row: iconRow;
         }
@@ -377,8 +379,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .drawer__actions{
           grid-column: centerCol;
           grid-row: logBut;
-          @apply(--layout-vertical);
-          @apply(--layout-center);       
+          @apply --layout-vertical;
+          @apply --layout-center;       
         }
 
         iron-icon.exitIcon{
@@ -395,8 +397,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .confirm-button__wrapper{
           grid-column: centerCol;
           grid-row: confBut;
-           @apply(--layout-horizontal);
-          @apply(--layout-center-justified);
+          @apply --layout-horizontal;
+          @apply --layout-center-justified;
         }
 
         .drawer__tasks-wrapper{
@@ -489,7 +491,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header slot="header" condenses effects="waterfall">
 
           <app-toolbar class="header__toolbar">
-            <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
+            <paper-icon-button class="header__menu-icon" icon="my-icons:menu" drawer-toggle></paper-icon-button>
             <div main-title spacer class="header__main-title">Gomivia</div>
 
             <iron-icon on-tap="dialogLogin" icon="my-icons:account-circle" hidden$="{{signed}}" class="account-icon"></iron-icon> 
@@ -506,7 +508,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           </paper-tabs>
 
           <!-- Account Dropdown  -->             
-          <iron-dropdown id="profileDrop" class="account-drop" horizontal-align="right" vertical-align="top" vertical-offset="68" horizontal-offset="5">
+          <iron-dropdown id="profileDrop" class="account-drop" horizontal-align="right" vertical-align="top" vertical-offset="68" horizontal-offset="12">
             <div slot="dropdown-content">
                 <div class="account-drop__content">
                   <iron-image class="account-drop__photo" hidden$="{{!signed}}" src$="[[userProfile.photoURL]]" sizing="cover"></iron-image>
@@ -585,7 +587,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         id="auth" 
         user="{{user}}" 
         signed-in="{{signed}}"
-        status-known="{{statusKnown}}"
         app="{{fbapp}}">
     </firebase-auth>
 

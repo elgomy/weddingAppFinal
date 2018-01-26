@@ -35,14 +35,14 @@
       <firebase-auth 
           app-name="wedding-app"
           id="auth" 
-          user="{{firebaseUser}}" 
+          user="{{user}}" 
           signed-in="{{signed}}"
           app="{{fbapp}}">
       </firebase-auth>
 
       <firebase-document
         app-name="wedding-app"
-        path="/users/[[firebaseUser.uid]]/tasks"
+        path="/users/[[user.uid]]/tasks"
         data="{{task}}">
       </firebase-document>
 
@@ -68,7 +68,10 @@
       // Declare properties for the element's public API         
       static get properties() {
         return {
-         
+         fbapp:Object,
+         task:Object,
+         signed:Boolean,
+         firebaseUser: Object
         }
       }
 

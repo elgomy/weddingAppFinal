@@ -14,7 +14,7 @@
 <link rel="import" href="../mixins/saveprofile-firebase.html">
 <link rel="import" href="../mixins/launch-toast.html">
 
-
+<link rel="import" href="../../bower_components/polymerfire/polymerfire.html">
 <!--
 `login-admin`
  user login, signup with Firebase (save user data into Firebase)
@@ -51,8 +51,8 @@
       }
 
       .spinner{
-        @apply(--layout-horizontal);
-        @apply(--layout-center-justified);
+        @apply --layout-horizontal;
+        @apply --layout-center-justified;
       }
 
     </style>
@@ -61,7 +61,7 @@
     <firebase-auth 
         app-name="wedding-app"
         id="auth" 
-        user="{{firebaseUser}}" 
+        user="{{user}}" 
         signed-in="{{signed}}"
         app="{{fbapp}}">
    </firebase-auth>
@@ -70,7 +70,7 @@
      <!-- USER LOGIN / SIGN UP -->
    
       <paper-tabs align-bottom selected="{{signSect}}" attr-for-selected="name">
-        <paper-tab name="signin">Log In</paper-tab>
+        <paper-tab name="signin">Entrar</paper-tab>
         <paper-tab name="register">Sign Up</paper-tab>
       </paper-tabs>
    

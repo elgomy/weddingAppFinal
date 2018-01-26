@@ -1,0 +1,62 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+
+    
+<dom-module id="day-countdown">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      span{
+        color: var(--accent-color);
+        font-size: large;
+      }
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+   <p><span>[[countdown]] dias</span> para que confirmes</p>
+   
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class DayCountdown extends Polymer.Element {
+
+      static get is() { return 'day-countdown'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+          today: {
+            type: Date, 
+            value: new Date()
+          },
+          lastDay:{
+          	type: Date,
+          	value: new Date(2018,1,28)
+          },
+          countdown:{
+          	type:Date,
+          	computed: 'setCountdown(today, lastDay)'
+          }
+        }
+      }
+
+      ready(){
+        super.ready();
+        this.setCountdown();
+      }
+      setCountdown(today, lastDay){
+      	let daysMilisec = lastDay - today;
+      	let days = Math.floor(daysMilisec / (1000 * 60 * 60 * 24));return days
+      }
+    
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(DayCountdown.is, DayCountdown);
+  </script>
+
+</dom-module>

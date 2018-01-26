@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-weather/paper-weather.html">
+    
+<dom-module id="weather-element">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      /* CSS rules for your element */
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+    <paper-weather list unit="c" location="Jericoacoara"></paper-weather>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class WeatherElement extends Polymer.Element {
+
+      static get is() { return 'weather-element'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+          
+        }
+      }
+
+      // Add methods to the element's public API
+    
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(WeatherElement.is, WeatherElement);
+  </script>
+
+</dom-module>
