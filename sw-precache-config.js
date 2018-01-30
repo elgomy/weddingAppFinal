@@ -15,7 +15,9 @@ module.exports = {
     'bower_components/webcomponentsjs/webcomponents-loader.js',
     'images/*',
     'manifest.json',
+    'index.html'
   ],
+  navigateFallback: 'index.html',
   runtimeCaching: [
     {
       urlPattern: /\/bower_components\/webcomponentsjs\/.*.js/,
