@@ -10,6 +10,10 @@
 <link rel="import" href="amchart-flight.html">
 <link rel="import" href="amchart-flight2.html">
 
+ <script async src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
+
+
+
 
   
 <dom-module id="flight-search">
@@ -23,14 +27,14 @@
       }
 
       p{
-        font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+        font-family: 'Montserrat','Noto', sans-serif;
       }
         
       paper-collapse-item{
         --paper-collapse-item-header: {
             font-weight:bold;
             color: var(--accent-color);
-            font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+            font-family: 'Montserrat', 'Noto', sans-serif;
         };
       }
     
@@ -39,7 +43,7 @@
         --paper-radio-button-checked-ink-color: var(--accent-color);
         --paper-radio-button-unchecked-color: var(--accent-color);
         --paper-radio-button-unchecked-ink-color: var(--accent-color);
-        font-family: 'Montserrat','Roboto', 'Noto', sans-serif;
+        font-family: 'Montserrat', 'Noto', sans-serif;
       }
 
       paper-button{
@@ -54,7 +58,7 @@
       .flight-search__map{
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
         margin: 5px;
-        width: 300px;
+        width: 282px;
       }
 
       date-picker{
@@ -65,23 +69,23 @@
       .date-calendar{
         margin-top: 1.3rem;
       }
-    
-    
+       
 
      @media (min-width: 1085px){
+      
         .flight-search__first-option{
-        display: grid;
-        grid-template-columns: [mapCol] 302px [searchCol] 2fr;
-        grid-column-gap: 1rem;
-     }
+          display: grid;
+          grid-template-columns: [mapCol] 300px [searchCol] 2fr;
+          grid-column-gap: 1rem;
+        }
 
-     .flight-search__map{
-        grid-column: mapCol;
-     }
+        .flight-search__map{
+          grid-column: mapCol;
+        }
 
-     .flight-search__flights{
-        grid-column: searchCol;
-     }
+        .flight-search__flights{
+          grid-column: searchCol;
+        }
 
      }
     </style>
