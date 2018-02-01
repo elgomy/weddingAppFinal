@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
 <link rel="import" href="../elements/gallery-elements/photo-wall2.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <dom-module id="my-view3">
   <template>
@@ -24,9 +25,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
     <div class="card">
-      <p>Es importante resaltar que nuestro evento no será la típica ceremonia, sino más bien va a ser una fiesta rodeados de amigos, evidentemente con música, bebida típica brasileira y gastronomía de la región.</p>
-      <p>Respecto a la vestimenta, ven lo más informal que puedas, ya que no te olvides que la fiesta será en la playa!!.</p>
-      <p>Esa noche, la bonita posada Vila Preamar, estará a nuestra entera disposicion para celebrar el evento y pasarlo genial:</p>
+      <p>{{localize('p1')}}</p>
+      <p>{{localize('p2')}}</p>
+      <p>{{localize('p3')}}</p>
     </div>
 
     <div class="card">
@@ -36,8 +37,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyView3 extends Polymer.Element {
+    class MyView3 extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element)  {
       static get is() { return 'my-view3'; }
+
+      static get properties(){
+        return {
+
+          language:{
+            type: String
+          },
+
+          resources:{
+            type: Object,
+            value(){
+              return{
+                'es': {
+                  'p1': 'Es importante resaltar que nuestro evento no será la típica ceremonia, sino más bien va a ser una fiesta rodeados de amigos, evidentemente acompanhados de buena música, bebida típica brasileira y gastronomía de la región.',
+                  'p2': 'Respecto a la vestimenta, ven lo más informal que puedas, ya que no te olvides que la fiesta será en la playa!!.',
+                  'p3': 'Esa noche, la bonita posada Vila Preamar estará a nuestra entera disposicion para celebrar el evento y pasarlo genial:'
+                },
+
+                'pt':{
+                  'p1': 'Importante ressaltar que o evento não será a típica cerimônia, mas sim uma festa rodeados de amigos, evidentemente acompanhados de boa música, bebidas e gastronomia da região.',
+                  'p2': 'Respeito a vestimenta, venha o mais informal possível, já que não pode esquecer que a festa será na praia!!.',
+                  'p3': 'Nessa noite, a linda pousada Vila Preamar ficará a nossa inteira disposição para comemorar o evento e curtir ao máximo:'
+                }
+              }
+            }
+          }
+
+        }
+      }
     }
 
     window.customElements.define(MyView3.is, MyView3);

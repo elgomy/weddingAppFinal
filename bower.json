@@ -31,7 +31,9 @@
     "datetime-picker": "fooloomanzoo/datetime-picker#^2.6.5",
     "paper-tooltip": "PolymerElements/paper-tooltip#^2.0.1",
     "paper-weather": "ryanburns23/paper-weather#^2.1.2",
-    "roboto-fontface": "^0.8.0"
+    "roboto-fontface": "^0.8.0",
+    "app-localize-behavior": "PolymerElements/app-localize-behavior#^2.0.0",
+    "paper-toggle-button": "PolymerElements/paper-toggle-button#^2.0.0"
   },
   "resolutions": {
     "polymer": "^2.0.0"

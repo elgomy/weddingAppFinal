@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
     
 <dom-module id="day-countdown">
@@ -13,7 +14,7 @@
 
     <!-- shadow DOM for your element -->
 
-   <p><span>[[countdown]] dias</span> para que confirmes</p>
+   <p><span>[[countdown]]{{localize('text1')}}</span>{{localize('text2')}}</p>
    
 
   </template>
@@ -21,7 +22,7 @@
   <script>
 
     // Define the element's API using an ES2015 class
-    class DayCountdown extends Polymer.Element {
+    class DayCountdown extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element)  {
 
       static get is() { return 'day-countdown'; }
 
@@ -39,6 +40,26 @@
           countdown:{
           	type:Date,
           	computed: 'setCountdown(today, lastDay)'
+          },
+
+          language:{
+            type: String
+          },
+
+          resources:{
+            type:Object,
+            value(){
+              return{
+                'es': {
+                  'text1': ' dias ',
+                  'text2': 'para que confirmes'
+                },
+                'pt':{
+                  'text1': ' dias ',
+                  'text2': 'para você confirmar'
+                }
+              }
+            }
           }
         }
       }

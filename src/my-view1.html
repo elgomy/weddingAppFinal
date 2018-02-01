@@ -10,6 +10,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
 <link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <dom-module id="my-view1">
   <template>
@@ -25,16 +26,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="card">
       
       
-      <p>Ya tienes un motivo para venir a Brasil !!!</p>
-      <p>El <span style="text-decoration: underline; font-weight: bold">8 de septiembre</span> queremos preparar una fiesta que sea no sólo especial para nosotros, sino para vosotros también. Si te animas y preparas la maleta te prometemos que no te arrepentirás.</p>
-      <p>Para celebrarlo hemos escogido un paraíso sorprendente, Jericoacoara, en el estado de Ceará, nordeste de Brasil.</p>
-      <p>Hemos creado esta web app no sólo para que tengas todas las informaciones sobre el lugar, sino que es una herramienta para gestionar tu participación en el evento. A través de la web app podrás confirmar tu presencia, tener información sobre los vuelos y el hospedaje.</p>
+      <p>{{localize('p1', 'country', 'Brasil', 'city', 'Jeri')}}</p>
+      <p>{{localize('p2')}}</p>     
+      <p>{{localize('p3', 'country', 'Brasil', 'city', 'Jericoacoara', 'estate', 'Ceará')}}</p>
+       <p>{{localize('p4')}}</p> 
+    
     </div>
   </template>
 
   <script>
-    class MyView1 extends Polymer.Element {
+    class MyView1 extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
       static get is() { return 'my-view1'; }
+
+      static get properties(){
+        return {
+
+          language:{
+            type:String
+          },
+          // Initialize locale data
+          resources: {
+            type:Object,
+            value() {
+              return {
+                'es': { 'p1': 'Ya tienes un motivo para venir a {country}!!.',
+                        'p2': 'El 8 de septiembre queremos preparar una fiesta que sea no sólo especial para nosotros, sino para vosotros también. Si te animas y preparas la maleta, te prometemos que no te arrepentirás.',
+                        'p3': 'Para celebrarlo hemos escogido un paraíso sorprendente, {city}, en el estado de {estate}, nordeste de {country}.',
+                        'p4': 'Hemos creado esta web app no sólo para que tengas todas las informaciones sobre el lugar, sino que es una herramienta para gestionar tu participación en el evento. A través de la web app podrás confirmar tu presencia, tener información sobre los vuelos y el hospedaje.'        
+                      },
+                  
+                'pt': { 'p1': 'Você já tem um motivo para ir a {city}!!.',
+                        'p2': 'No dia 8 de setembro queremos preparar uma festa que seja não somente especial para nós, mas também para vocês. Se você animar e arrumar a mal, te prometemos que não vai se arrepender.',
+                        'p3': 'Para comemorar temos escolhido um paraíso supreendente, {city}, no estado de {estate}, nordeste do {country}.',
+                        'p4': 'Criamos esta web app não só para você ter todas as informações sobre o lugar, mas também é uma ferramenta para você administrar a sua participação no evento. Através dela você poderá confirmar a sua presença, ter informações sobre os voos e a hospedagem.'
+                      },
+
+              }
+            }
+          }
+
+        }
+      }
+
+
     }
 
     window.customElements.define(MyView1.is, MyView1);

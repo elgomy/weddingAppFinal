@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../elements/flight-elements/flight-search.html">
 <link rel="import" href="../elements/hotels-element.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <dom-module id="my-view4">
   <template>
@@ -30,19 +31,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="card">
 
-        <p>El evento será celebrado el dia 8 de septiembre en la Playa de Preá (Jericoacoara), que se encuentra a 287 km (4 horas en coche) del aeropuerto internacional de Fortaleza. Una vez confirmada tu presencia y la fecha de tu estancia, que puedes comunicarnos en esta misma página, nosotros nos encargaremos de gestionar el tránsfer desde Fortaleza hasta Jericoacoara.</p>
-        <p>Hacemos dos propuestas de viaje. La primera sería pasar unos días de relax en el paraíso de Jericoacora. Esta sería la opción más tranquila, ya que debe ser considerado que Jeri apenas tiene estructura turística, y las noches son tranquilas y los días son para pasarlos en la playa o paseando por sus maravillosas dunas. La segunda opción, más agitada, incluiría una primera parada en Rio de Janeiro, para después volar hasta Fortaleza y celebrar el evento. Esta segunda opción será la que nosotros realizaremos y a la que ya se han sumado algunos invitados, pasando en Rio las noches del 31 al 5, subiendo el 5 de Septiembre para Fortaleza. A continuación puedes buscar los precios de los vuelos en las fechas que serían más o menos las previstas, para que tengas una idea de los precios. Una vez que nos confirmes tu opción seleccionada y las fechas, te asesoraremos en lo que alojamiento hace referencia, ya que existen las opciones de reservar casas completas para grupos o habitaciones en posadas.</p>
+        <p>{{localize('p1', 'city', 'Jericoacora','city1', 'Fortaleza', 'city2', 'Preá')}}</p>
+        <p>{{localize('p2', 'city', 'Jericoacora','city1', 'Rio de Janeiro', 'city2', 'Fortaleza')}}</p>
 
-     <flight-search></flight-search>
+     <flight-search language="[[language]]"></flight-search>
    </div>
 
    <div class="card">
 
-        <h3>Alojamiento</h3>
+        <h3>{{localize('title')}}</h3>
     
-        <p>Los alojamientos listados abajo son un ejemplo del precio de 1 noche (en el caso de Booking 1 cuarto para 2 personas y en el caso de Airbnb casas enteras), apenas para tener una referencia. También debe ser considerado que para Jeri y Preá consideramos como noche la del 8 de septiembre, el día del evento, que puede ser más cara por tratarse de un día de puente en Brasil. Aunque también mostramos alojamientos en Preá, recomendamos alojarse en Jeri, ya que es más céntrica, y Preá se encuentra a 14 km de ésta. Podría ser interesante alojarse en Preá apenas el día 8, día de la fiesta. Las opciones listadas por Airbnb son para casas completas, por lo que en el caso de poder alojar a grupos, puede salir más económico, por lo que sería importante que nos confirmárais las fechas y las opciones que hemos listado anteriormente en esta sección. Obviamente podéis contar con nuestro asesoramiento respecto a la mejor localización, etc.</p>
+        <p>{{localize('p3', 'city', 'Jeri','country', 'Brasil', 'city2', 'Fortaleza', 'city3', 'Preá', 'airbnb', 'Airbnb', 'booking', 'Booking')}}</p>
 
-    <hotels-element></hotels-element>
+    <hotels-element language="[[language]]"></hotels-element>
      
 
    </div>
@@ -50,8 +51,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyView4 extends Polymer.Element {
+    class MyView4 extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element)  {
       static get is() { return 'my-view4'; }
+
+      static get properties(){
+        return{
+
+          language:{
+            type: String
+          },
+
+          resources:{
+            type: Object,
+            value(){
+              return{
+                'es': {
+                  'p1': 'El evento será celebrado el dia 8 de septiembre en la Playa de ({city2}), que se encuentra a 287 km (4 horas en coche) del aeropuerto internacional de {city1}. Una vez confirmada tu presencia y la fecha de tu estancia, que puedes comunicarnos en esta misma sección, nosotros nos encargaremos de gestionar el tránsfer desde {city1} hasta {city}.',
+                  'p2': 'Hacemos dos propuestas de viaje. La primera sería pasar unos días de relax en el paraíso de {city}. Esta sería la opción más tranquila, ya que debe ser considerado que Jeri apenas tiene estructura turística, y las noches son tranquilas y los días son para pasarlos en la playa o paseando por sus maravillosas dunas. La segunda opción, más agitada, incluiría una primera parada en {city1}, para después volar hasta {city2} y celebrar el evento. Esta segunda opción será la que nosotros realizaremos y a la que ya se han sumado algunos invitados, pasando en {city1} las noches del 31 al 5, subiendo el 5 de Septiembre para {city2}. A continuación puedes buscar los precios de los vuelos en las fechas que serían más o menos las previstas, para que tengas una idea de los precios. Una vez que nos confirmes tu opción seleccionada y las fechas, te asesoraremos en lo que alojamiento hace referencia, ya que existen las opciones de reservar casas completas para grupos o habitaciones en posadas.',
+                  'p3': 'Los alojamientos listados abajo son un ejemplo del precio de 1 noche (en el caso de {booking} 1 cuarto para 2 personas y en el caso de {airbnb} casas enteras), apenas para tener una referencia. También debes tener en cuenta que para {city} y {city3} consideramos como noche la del 8 de septiembre, el día del evento, que puede ser más cara por tratarse de un día de puente en {country}. Aunque también mostramos alojamientos en {city3}, recomendamos alojarse en {city}, ya que es más céntrica, y {city3} se encuentra a 14 km de ésta. Podría ser interesante alojarse en {city3} apenas el día 8, día de la fiesta. Las opciones listadas por {airbnb} son para casas completas, por lo que en el caso de poder alojar a grupos puede salir más económico, por lo que sería importante que nos confirmárais las fechas y las opciones que hemos listado anteriormente en esta sección. Obviamente podéis contar con nuestro asesoramiento respecto a la mejor localización, etc.',
+                  'title': 'Alojamiento'
+                },
+
+                'pt':{
+                  'p1': 'O evento será celebrado no dia 8 de septiembre en la Playa de ({city2}), que está localizada a 287 km (4 horas de carro) do aeroporto internacional de {city1}. Uma vez confirmada a sua presença e as datas da sua estância, que você pode nos comunicar nesta seção, nós te ajudaremos com o tránsfer desde {city1} até {city}. Também existe a opção de voar diretamente a {city}, embora desde BH os preços são elevados. Para as pessoas que viajam desde SP talvez consigam alguma boa oferta pontual. Já vimos voos com Avianca de BH para {city1} saindo na quinta feira dia 6, voltando no domingo dia 9, por R$ 790, pelo que recomendamos ir acompanhando os preços, não só no site Decolar, mas também nos sites das companhias diretamente. Chegando em {city2}, dependendo do horario, pode ser considerado ficar uma noite lá, já que lembramos que são 4h de viagem de carro para {city}.',
+                  'p2': 'A seguir você pode procurar os preços dos voos nas datas mais ou menos previstas, para você ter uma ideia dos preços. Uma vez que você confirmar as datas, te assessoraremos respeito a hospedagem, já que existem opções de reservar casas inteiras para grupos ou quartos em pousadas.',
+                  'p3': 'As opções a seguir são um exemplo do preço por 1 noite (no caso caso do {booking} 1 quarto para 2 pessoas e no caso de {airbnb} casas interas), apenas para ter uma ideia. Tambén deve ser considerado que para {city} e {city3} selecionamos a noite do dia 8 de setembro, o día do evento, que pode ser mais cara por se tratar de feriado. Embora mostramos hospedagem em {city3}, recomendamos procurar em {city}, já que é mais cêntrica, e {city3} fica a 14 km desta. Poderia ser interesante dormir em {city3} apenas no día 8, o día da festa. As opções do {airbnb} são para casas inteiras, pelo que no caso de poder reservar para grupos poderia ficar mais barato, e reforçamos que sería importante confirmar as datas nesta seção. Obviamente você pode contar com o nosso assesoramiento respeito a melhor localização, etc.',
+                  'title': 'Hospedagem'
+                }
+              }
+            }
+          }
+
+        }
+      }
     }
 
     window.customElements.define(MyView4.is, MyView4);

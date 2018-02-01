@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shared-styles.html">
 
 <link rel="import" href="../elements/gallery-elements/photo-wall.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <dom-module id="my-view2">
   <template>
@@ -25,10 +26,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
 
      <div class="card">
-       <p>Jericoacora, Jeri para los amigos, un pequeño pueblo de nombre impronunciable pero con una de las mejores playas de Brasil –de hecho entre las diez mejores del mundo para el Washington Post–.
-      </p>
-      <p>Se encuentra dentro del Parque Nacional de Jericoacoara y entre las restricciones que existen por este motivo está el que no haya asfalto en sus pocas calles, que están cubiertas de la misma arena que forma sus interminables playas. Otra de las características que lo convierten en un lugar mágico es que no haya iluminación en sus calles, sólo la que sale de los comercios y posadas.</p>
-      <p>Un lugar realmente mágico, allí te esperamos!</p>
+        <p>{{localize('p1', 'country', 'Brasil', 'city', 'Jerioacoara', 'cityA', 'Jeri', 'newspaper', 'Washington Post')}}</p>
+        <p>{{localize('p2', 'city', 'Jerioacoara')}}</p>
+        <p>{{localize('p3')}}</p>
     </div>
 
     <div class="card">
@@ -37,8 +37,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyView2 extends Polymer.Element {
+    class MyView2 extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
       static get is() { return 'my-view2'; }
+
+      static get properties(){
+        return{
+            language:{
+            type: String
+          },
+
+          resources: {
+            type:Object,
+            value(){
+              return{
+                'es': {
+                  'p1': '{city}, {cityA} para los amigos, un pequeño pueblo de nombre impronunciable pero con una de las mejores playas de {country} –de hecho entre las diez mejores del mundo para el {newspaper}–.',
+                  'p2': 'Se encuentra dentro del Parque Nacional de {city} y entre las restricciones que existen por este motivo está el que no haya asfalto en sus pocas calles, que están cubiertas de la misma arena que forma sus interminables playas. Otra de las características que lo convierten en un lugar mágico, es que no haya iluminación en sus calles, sólo la que sale de los comercios y posadas.',
+                  'p3': 'Un lugar realmente mágico. Te esperamos!!.'
+                },
+
+                'pt': {
+                  'p1': '{city}, {cityA} para os colegas, um pequeno lugar de nome impronunciável mas com uma das melhores praias do {country} -de fato entre as dez melhores do mundo segundo o jornal {newspaper}-.',
+                  'p2': 'Se encontra dentro do Parque Nacional de {city} e uma das restrições que existem por esse motivo é que não há asfalto nas poucas ruas do lugar, que estão cobertas pela mesma areia que forma as intermináveis praias. Outra das caraterísticas que o transformam num lugar mágico, é que não há iluminaçao nas ruas, somente a luz que sai dos comércios e pousadas. '
+
+                }
+              }
+            }
+          }
+        }
+      }
+
+
     }
 
     window.customElements.define(MyView2.is, MyView2);

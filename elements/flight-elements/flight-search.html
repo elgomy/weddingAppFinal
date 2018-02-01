@@ -6,15 +6,12 @@
 <link rel="import" href="../../bower_components/paper-collapse-item/paper-collapse-item.html">
 <link rel="import" href="../../bower_components/datetime-picker/date-picker.html">
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 <link rel="import" href="amchart-flight.html">
 <link rel="import" href="amchart-flight2.html">
 
- <script async src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
-
-
-
-
+<script async src="https://www.amcharts.com/lib/3/maps/js/worldLow.js"></script>
   
 <dom-module id="flight-search">
   <!-- Optional shadow DOM template -->
@@ -109,6 +106,8 @@
         path="/users/[[user.uid]]/tripDates"
         data="{{dates}}">
       </firebase-document>
+
+  <template is="dom-if" if="[[flightsEs]]">
  
     <div class="wrapp__flight-search">
 
@@ -169,6 +168,8 @@
 
     </div>
 
+
+
     <div class="radio-group">
       <span>Dinos qué opción vas a seleccionar:</span>
       <div>
@@ -179,13 +180,74 @@
       </div>
     </div>
 
+  </template>
+
+    <template is="dom-if" if="[[flightsPt]]">
+ 
+    <div class="wrapp__flight-search">
+
+        <paper-collapse-item>
+          <div slot="header">
+             Desde BH
+          </div>
+            <div class="flight-search__first-option">
+               
+
+                <div class="flight-search__flights">
+                    <div class="flight-search__flight">
+                        <p>Voos (faixa R$ 780 - R$ 1.500):</p>
+                        <p>
+                        <a href="https://www.decolar.com/shop/flights/results/roundtrip/BHZ/FOR/2018-09-06/2018-09-09/1/0/0?from=SB" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></iron-icon></paper-button></a>BH-Fortaleza 
+                        </p>
+                    </div>  
+                    <div class="flight-search__flight">
+                        <p>Voos (faixa R$ 2.000 - R$ 3.300):</p>
+                        <p>
+                        <a href="https://www.decolar.com/shop/flights/results/roundtrip/BHZ/JJD/2018-09-06/2018-09-09/1/0/0?from=SB" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></iron-icon></paper-button></a>BH-Jeri 
+                        </p>
+                    </div>                         
+                </div>
+            </div>
+        </paper-collapse-item>
+      
+        <paper-collapse-item>
+          <div slot="header">
+            Desde SP
+          </div>
+             <div class="flight-search__first-option">
+
+                <div class="flight-search__flights">
+                    <div class="flight-search__flight">
+                        <p>Voos (faixa R$ 680 - R$ 1.500):</p>
+                        <p>
+                        <a href="https://www.decolar.com/shop/flights/results/roundtrip/SAO/FOR/2018-09-06/2018-09-09/1/0/0?from=SB" target="_blank">
+                        <paper-button raised><iron-icon class="flight" icon="my-icons:flight"></iron-icon></paper-button></a>SP-Fortaleza
+                        </p>
+                    </div>
+
+                    <div class="flight-search__flight">
+                        <p>Voos (faixa R$ 1.400 - R$ 3.000):</p>
+                        <p>
+                        <a href="https://www.decolar.com/shop/flights/results/roundtrip/sao/jjd/2018-09-05/2018-09-12/1/0/0/NA/NA/NA/NA/NA?refererEvent=calendarPricesMatrix" target="_blank"><paper-button raised><iron-icon class="flight" icon="my-icons:flight"></paper-button></a>SP-Jeri
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </paper-collapse-item>
+
+    </div>
+
+  </template>
+
     <div class="date-calendar">
-      <span>Dinos qué fechas piensas viajar:</span>
+      <span>{{localize('title')}}</span>
       <div>
         <date-picker auto-confirm id="goingCalendar" date="{{dates.goingDate}}"></date-picker><span>Ida</span>
       </div>
       <div>
-        <date-picker auto-confirm id="returnCalendar" date="{{dates.returnDate}}"></date-picker><span>Vuelta</span>
+        <date-picker auto-confirm id="returnCalendar" date="{{dates.returnDate}}"></date-picker><span>{{localize('text')}}</span>
       </div>
     </div>
 
@@ -195,7 +257,7 @@
   <script>
 
     // Define the element's API using an ES2015 class
-    class FligthSearch extends Polymer.Element {
+    class FligthSearch extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
 
       static get is() { return 'flight-search'; }
 
@@ -234,9 +296,52 @@
                 returnDate:''
               }
             }
+          },
+
+          language:{
+            type: String
+          },
+
+          resources:{
+            type:Object,
+            value(){
+              return{
+                'es':{
+                  'title': 'Por favor, selecciona las fechas del viaje',
+                  'text': 'Vuelta'
+                },
+                'pt':{
+                  'title': 'Favor, seleciona as datas da viagem',
+                  'text': 'Volta'
+                }
+              }
+            }
+          },
+
+          flightsEs:{
+            type:Boolean,
+            computed: 'showEsFlights(language)'
+          },
+
+          flightsPt:{
+            type:Boolean,
+            computed: 'showPtFlights(language)'
           }
         }
       }
+
+      showEsFlights(language){
+        if (language == 'es'){
+          return true 
+        } else return false      
+      }
+
+      showPtFlights(language){
+        if (language == 'pt'){
+          return true 
+        } else return false  
+      }
+
        /**
           * IMPORTANT: this method prevent both radio-buttons to be setted as 'true', and force to behave as real toogle button
           * @param {e}

@@ -40,6 +40,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-image/iron-image.html">
 <link rel="import" href="../bower_components/iron-dropdown/iron-dropdown.html">
 <link rel="import" href="../bower_components/paper-spinner/paper-spinner-lite.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
 
 
 <link rel="import" href="../elements/elements-import.html">
@@ -76,14 +79,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* /////////////////////////////////////////////////// */
 
-      app-toolbar iron-image{
+      .logo{
         --iron-image-width: 10rem;
-      }
-
-      .drawer__container{
-        display: grid;
-        grid-template-rows: [menuRow] 10rem [tasksRow] 12rem;
-        grid-row-gap: 2rem;
       }
          
       .drawer-list {
@@ -123,8 +120,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         --iron-icon-height:35px; 
       }
 
-      .account-image{
-        background-color:var(--app-primary-color);
+      .account-image{     
         border-radius: 50%;
         --iron-image-width:35px;
         --iron-image-height:35px;
@@ -256,6 +252,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: none;
       }
 
+      .lang{
+        width: 80px;
+        margin: auto;
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
+      }
+
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
@@ -293,10 +296,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
          font-family: 'Montserrat', 'Noto', sans-serif;
         }
 
+
         .drawer__login-grid{
           display: grid;
-          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11em,15em) [rightGap] 1fr;
-          grid-template-rows: [topRow] 10em [centRow] minmax(16em,16em) [botRow] 1fr;
+          grid-template-columns: [leftGap] 1fr [centerCol] minmax(11rem,15rem) [rightGap] 1fr;
+          grid-template-rows: [topRow] 10rem [centRow] minmax(16rem,18rem) [botRow] 8rem;
         }
 
         .drawer__avatar-container{
@@ -368,6 +372,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           grid-row: botRow;
         }
 
+        .lang{
+          width: 80px;
+            
+        }
+
         .spacer{
           display: block;
         }
@@ -397,16 +406,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer" no-focus-trap>
         <app-toolbar>
           <div class="spacer" spacer></div>
-          <iron-image src="../images/logo1.png"></iron-image> 
+          <iron-image class="logo" src="../images/logo1.png"></iron-image> 
         </app-toolbar>
-
+        <!-- //////////////// Drawer container ///////////// -->
         <div class="drawer__container">
             <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
               <a name="view1" href="[[rootPath]]view1">Inicio</a>
-              <a name="view2" href="[[rootPath]]view2">El Lugar</a>
-              <a name="view3" href="[[rootPath]]view3">El Evento</a>
-              <a name="view4" href="[[rootPath]]view4">El Viaje</a>
-              <a name="view5" href="[[rootPath]]view5">Más</a>
+              <a name="view2" href="[[rootPath]]view2">{{localize('tab2')}}</a>
+              <a name="view3" href="[[rootPath]]view3">{{localize('tab3')}}</a>
+              <a name="view4" href="[[rootPath]]view4">{{localize('tab4')}}</a>
+              <a name="view5" href="[[rootPath]]view5">{{localize('tab5')}}</a>
             </iron-selector>
           <!-- Drawer login system -->
             <div class="drawer__login-grid" hidden$="{{signed}}">
@@ -415,35 +424,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 </div>        
                 <login-admin class="drawer__login-admin"></login-admin>     
             </div>
-
+          <!-- Drawer user data & tasks -->
             <div class="drawer__user-grid" hidden$="{{!signed}}">
                 <div class="drawer__user-container">
-                  <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
+                    <iron-image loaded="{{loaded}}" preload fade class="drawer__user-image" src="[[userProfile.photoURL]]" sizing="cover"></iron-image> 
                 </div>  
-
+      
                 <template is="dom-if" if="{{!task.confirm}}">
                   <div class="day-countdown__wrapper">
-                    <day-countdown></day-countdown>  
+                      <day-countdown language="[[language]]"></day-countdown>  
                   </div>  
                   <div class="confirm-button__wrapper">
-                  <paper-button raised on-tap="confirm">Anímate!</paper-button>
+                      <paper-button raised on-tap="confirm">Vamos!</paper-button>
                   </div> 
                 </template>
               
                 <template is="dom-if" if="{{task.confirm}}">
-                  <div class="drawer__tasks-wrapper"> 
-                    <tasks-element class="drawer__tasks"></tasks-element>    
-                  </div>  
+                    <div class="drawer__tasks-wrapper"> 
+                      <tasks-element class="drawer__tasks" language="[[language]]"></tasks-element>    
+                    </div>  
                 </template>  
               
                 <div class="drawer__actions">
-                  <paper-spinner-lite class="drawer__spinner" active="{{!userProfile.photoURL}}" alt="sign in processing"></paper-spinner-lite>
-                  <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
-                  <paper-tooltip for="exitIcon" position="right" offset="10">Salir</paper-tooltip>     
+                    <paper-spinner-lite class="drawer__spinner" active="{{!userProfile.photoURL}}" alt="sign in processing"></paper-spinner-lite>
+                    <iron-icon id="exitIcon" alt="salir" class="exitIcon" icon="my-icons:exit-to-app" on-tap="logout"></iron-icon>
+                    <paper-tooltip for="exitIcon" position="right" offset="10">{{localize('logout')}}</paper-tooltip>     
                 </div>
             </div>
+          
+             <div class="lang">
+                <span title="english">🇪🇸</span>
+                <paper-toggle-button on-change="_toggle" id="switch"></paper-toggle-button>
+                <span title="french">🇧🇷</span>
+              </div>
         </div>
-              
+              <!-- ///////////////////////////////////-->  
       </app-drawer>
 
       <!--  ///////////////////////////////// Main content ///////////////////////////////////// -->
@@ -462,10 +477,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <!-- Header menu -->
           <paper-tabs class="header-menu" selected="{{page}}" attr-for-selected="name">
             <paper-tab name="view1">Inicio</paper-tab>
-            <paper-tab name="view2">El Lugar</paper-tab>
-            <paper-tab name="view3">El Evento</paper-tab>
-            <paper-tab name="view4">El Viaje</paper-tab>
-            <paper-tab name="view5">Más</paper-tab>
+            <paper-tab name="view2">{{localize('tab2')}}</paper-tab>
+            <paper-tab name="view3">{{localize('tab3')}}</paper-tab>
+            <paper-tab name="view4">{{localize('tab4')}}</paper-tab>
+            <paper-tab name="view5">{{localize('tab5')}}</paper-tab>
           </paper-tabs>
 
           <!-- Account Dropdown  -->             
@@ -479,7 +494,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                   </div>
                   <div class="account-drop__actions" id="actions">
                     
-                    <paper-button on-tap="logout">Salir</paper-button>
+                    <paper-button on-tap="logout">{{localize('logout')}}</paper-button>
                   </div>
                 </div>      
             </div>
@@ -492,11 +507,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             attr-for-selected="name"
             fallback-selection="view404"
             role="main">
-          <my-view1 name="view1"></my-view1>
-          <my-view2 name="view2"></my-view2>
-          <my-view3 name="view3"></my-view3>
-          <my-view4 name="view4"></my-view4>
-          <my-view5 name="view5"></my-view5>
+          <my-view1 language="[[language]]" name="view1"></my-view1>
+          <my-view2 language="[[language]]" name="view2"></my-view2>
+          <my-view3 language="[[language]]" name="view3"></my-view3>
+          <my-view4 language="[[language]]" name="view4"></my-view4>
+          <my-view5 language="[[language]]" name="view5"></my-view5>
           <my-view404 name="view404"></my-view404>
         </iron-pages>
        
@@ -506,7 +521,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <!-- Login dialog -->
     <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
       <h2 class="login-dialog__header">
-        <span>Vamos pá Brasil</span> 
+        <span>Te esperamos</span> 
         <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
       </h2>
       <div class="login-dialog__admin">
@@ -563,7 +578,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </template>
 
   <script>
-    class MyApp extends Polymer.Element {
+    class MyApp extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element) {
       static get is() { return 'my-app'; }
 
       static get properties() {
@@ -588,7 +603,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           user: Object,
           signed: Object,
           userProfile: Object,
-          task:Object      
+          task:Object,
+
+          language:{
+            value: 'es'
+          },
+           // Initialize locale data
+          resources:{
+            type: Object,
+            value(){
+              return {
+                'es':{
+                  'tab2': 'El Lugar',
+                  'tab3': 'El Evento',
+                  'tab4': 'El Viaje',
+                  'tab5': 'Más',
+                  'logout': 'Salir'
+                },
+                 'pt':{
+                  'tab2': 'O Lugar',
+                  'tab3': 'O Evento',
+                  'tab4': 'A Viagem',
+                  'tab5': 'Mais',
+                  'logout': 'Sair'
+                }
+              }
+            }
+          }
+
         };
       }
 
@@ -601,12 +643,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       _routePageChanged(page) {
         // If no page was found in the route data, page will be an empty string.
         // Default to 'view1' in that case.
-        this.page = page || 'view1';
+          this.page = page || 'view1';
 
         // Close a non-persistent drawer when the page & route are changed.
-        if (!this.$.drawer.persistent) {
-          this.$.drawer.close();
-        }
+          if (!this.$.drawer.persistent) {
+            this.$.drawer.close();
+          }
       }
 
       _pageChanged(page) {
@@ -620,62 +662,78 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       _showPage404() {
-        this.page = 'view404';
+          this.page = 'view404';
       }
       // Added methods
       ready(){
-        super.ready();
-        this.addEventListener('positiveToast', e => this._openPositiveToast(e));
-        this.addEventListener('negativeToast', e => this._openNegativeToast(e));
-        this.addEventListener('closeLogin', e => this.dialogClose(e));
-        this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account>       
+          super.ready();
+          this.addEventListener('positiveToast', e => this._openPositiveToast(e));
+          this.addEventListener('negativeToast', e => this._openNegativeToast(e));
+          this.addEventListener('closeLogin', e => this.dialogClose(e));
+          this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account> 
+          this._setLanguage();      
       }
+
+      _setLanguage(){
+          let language = window.navigator.language||navigator.browserLanguage;
+          let ln = language.substring(0,2);
+
+          if(ln == 'pt'  || ln == 'pt-BR'){
+            this.$.switch.checked = true;
+          } else {
+            this.$.switch.checked = false;
+          }
+      }
+
+      _toggle() {
+          this.language = this.$.switch.checked ? 'pt' : 'es';
+      }
+
 
        /**
           * we need to include Toast in <my-app> component in order to show it correctly
           * @param {e} receive text to be included in the toast
           */
       _openPositiveToast(e){
-            this.$.positiveToast.open();
-            this.$.positiveToast.text = e.detail
+          this.$.positiveToast.open();
+          this.$.positiveToast.text = e.detail
         }
 
       _openNegativeToast(e){
-            this.$.negativeToast.open();
-            this.$.negativeToast.text = e.detail
+          this.$.negativeToast.open();
+          this.$.negativeToast.text = e.detail
         }
       /**
           * open dialog with login / signup system
           */
 
       dialogLogin(){
-        this.$.dialogAuthentic.toggle()
+          this.$.dialogAuthentic.toggle()
       }
 
       dialogClose(){     
-        this.$.dialogAuthentic.close()
+          this.$.dialogAuthentic.close()
       }
       /**
           * open header drowpdown with account options
           */
       dropAccount(){      
-        this.$.profileDrop.open()
+          this.$.profileDrop.open()
       }
 
       closeDrope(){
-        this.$.profileDrop.close()
+          this.$.profileDrop.close()
       }
 
       /**
           * Firebase logout system
           */
       logout(){
-        if (!this.user){
+          if (!this.user){
                 alert('you are not logged in')
                     return false;
-                  }
-
-        this.$.auth.signOut().catch(function(error){
+          }
+          this.$.auth.signOut().catch(function(error){
           console.log(error.code, error.message)
         }).then(function(){
             this.closeDrope();
@@ -685,12 +743,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
       confirm(){
-        this.$.dialogCeleb.toggle();
-        setTimeout(() => {
-           this.$.dialogCeleb.close()
-        }, 5000);
-        this.set('task.confirm',true)
+          this.$.dialogCeleb.toggle();
+          setTimeout(() => {
+            this.$.dialogCeleb.close()
+          }, 5000);
+          this.set('task.confirm',true)
       }
+
+    
 
     }
 

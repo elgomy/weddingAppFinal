@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../bower_components/polymerfire/polymerfire.html">
 <link rel="import" href="../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../bower_components/app-localize-behavior/app-localize-behavior.html">
     
 <dom-module id="tasks-element">
   <!-- Optional shadow DOM template -->
@@ -27,7 +28,7 @@
      
     }
     
-    .check1, .check2, .check3{
+    .check1, .check2, .check3, .check4{
       grid-column: centCol;
     }
 
@@ -49,15 +50,18 @@
 
   	
     	<div class="container">
-    	 <div class="tasks-wrapper">
-    	   <paper-checkbox class="check1" checked="{{task.confirm}}" value="confirm">Presencia confirmada</paper-checkbox>
-         <paper-checkbox class="check1" id="check1" checked="{{task.tripOption}}" value="tripOption">Opción de viaje</paper-checkbox>
-    	   <paper-checkbox class="check2" id="check2" checked="{{task.flight}}" value="flight">Vuelo reservado</paper-checkbox>
-    	   <paper-checkbox class="check3" id="check3" checked="{{task.stay}}"" value="stay">Alojamiento reservado</paper-checkbox>
-          <paper-tooltip for="check1" position="right" offset="1">ir sección "El Viaje"</paper-tooltip>
-          <paper-tooltip for="check2" position="right" offset="1">ir sección "El Viaje"</paper-tooltip>
-          <paper-tooltip for="check3" position="bottom" offset="1">ir sección "El Viaje"</paper-tooltip>
-    	 </div>
+    	   <div class="tasks-wrapper">
+    	       <paper-checkbox class="check1" id="check1" checked="{{task.confirm}}" value="confirm">{{localize('check1')}}</paper-checkbox>
+          <template is="dom-if" if="[[checkEs]]">
+             <paper-checkbox class="check2" id="check2" checked="{{task.tripOption}}" value="tripOption">{{localize('check2')}}</paper-checkbox>
+          </template>
+    	       <paper-checkbox class="check3" id="check3" checked="{{task.flight}}" value="flight">{{localize('check3')}}</paper-checkbox>
+    	       <paper-checkbox class="check4" id="check4" checked="{{task.stay}}"" value="stay">{{localize('check4')}}</paper-checkbox>
+
+             <paper-tooltip for="check1" position="right" offset="1">{{localize('tooltip')}}</paper-tooltip>
+             <paper-tooltip for="check2" position="right" offset="1">{{localize('tooltip')}}</paper-tooltip>
+             <paper-tooltip for="check3" position="bottom" offset="1">{{localize('tooltip')}}</paper-tooltip>
+    	    </div>
     	</div>
 
   </template>
@@ -65,18 +69,51 @@
   <script>
 
     // Define the element's API using an ES2015 class
-    class TasksElement extends Polymer.Element {
+    class TasksElement extends Polymer.mixinBehaviors([Polymer.AppLocalizeBehavior], Polymer.Element)  {
 
       static get is() { return 'tasks-element'; }
 
       // Declare properties for the element's public API         
       static get properties() {
         return {
-         fbapp:Object,
-         task:Object,
-         signed:Boolean,
-         firebaseUser: Object
+          fbapp:Object,
+          task:Object,
+          signed:Boolean,
+          firebaseUser: Object,
+          language:{
+            type: String
+          },
+          resources:{
+            type:Object,
+            value(){
+              return{
+                'es':{
+                  'check1': 'Presencia confirmada',
+                  'check2': 'Opción de viaje',
+                  'check3': 'Vuelo reservado',
+                  'check4': 'Alojamiento reservado',
+                  'tooltip': 'ir sección "El Viaje"'
+                },
+                'pt':{
+                  'check1': 'Presença confirmada',
+                  'check3': 'Voo reservado',
+                  'check4': 'Quarto reservado',
+                  'tooltip': 'ir seção "A Viagem"'
+                }
+              }
+            }
+          },
+          checkEs:{
+            type:Boolean,
+            computed: 'showEscheck(language)'
+          },
         }
+      }
+
+      showEscheck(language){
+        if (language == 'es'){
+          return true 
+        } else return false      
       }
 
  
