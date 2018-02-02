@@ -259,6 +259,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         @apply --layout-around-justified;
       }
 
+      .contact{
+        margin-top: 20px;
+        @apply --layout-horizontal;         
+        @apply --layout-around-justified;
+      }
+
+      .whatsapp{
+        width: 30px;
+      }
+      
+
     /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
@@ -456,7 +467,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 <span title="english">🇪🇸</span>
                 <paper-toggle-button on-change="_toggle" id="switch"></paper-toggle-button>
                 <span title="french">🇧🇷</span>
-              </div>
+            </div>
+            <div class="contact">
+              <a href="https://api.whatsapp.com/send?phone=5531999034444"><img class="whatsapp" src="../images/whatsapp_icon.svg" alt="contacta con nosotros"></img></a>
+            </div>
         </div>
               <!-- ///////////////////////////////////-->  
       </app-drawer>
