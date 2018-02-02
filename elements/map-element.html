@@ -1,0 +1,55 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+<link rel="import" href="../bower_components/google-apis/google-maps-api.html">
+<link rel="import" href="../bower_components/google-map/google-map-marker.html">
+
+    
+<dom-module id="map-element">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      google-map{
+      	min-width: 310px;
+      	min-height: 310px;
+      }
+  
+    </style>
+
+    <google-maps-api api-key="AIzaSyBQmrFhtdagQZRAZps26eOV5qZ5z3wndxA"></google-maps-api>
+
+    <google-map latitude="-2.814094" longitude="-40.400264" fit-to-markers api-key="AIzaSyBQmrFhtdagQZRAZps26eOV5qZ5z3wndxA" map="{{map}}">
+  		<google-map-marker id="marker" latitude="-2.814094" longitude="-40.400264" icon="{{icon}}" open title="hola">
+  			<h2 style="color:blue; font-size: 0.9rem; text-align: center;">Vila Preamar</h2>
+        <span style="color:blue; font-size: 0.7rem;">Rua São Jose - Praia do Preá</span>
+  		</google-map-marker>
+	</google-map>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class MapElement extends Polymer.Element {
+
+      static get is() { return 'map-element'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+       		icon:{
+       			type:Object,
+       			value:'../images/minion.png'
+       		}
+        }
+      }
+
+      showAddress(){
+        console.log('hola')
+      }
+  
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(MapElement.is, MapElement);
+  </script>
