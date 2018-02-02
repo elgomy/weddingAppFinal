@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+
+    
+<dom-module id="currency-element">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      :host{
+        font-size: .9rem;
+      };
+      
+      span{
+      	background: var(--accent-color);
+      	color: #fff;
+        padding: 3px;
+      };
+    </style>
+
+    <!-- shadow DOM for your element -->
+
+    <iron-ajax
+        auto
+        url="https://api.fixer.io/latest?symbols=BRL"
+        handle-as="json"
+        last-response="{{data}}"
+        debounce-duration="300">
+       </iron-ajax>
+		
+		<div>
+       <p>Cambio BRL / EUR: <span>{{data.rates.BRL}}</span></p>
+		</div>
+     
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class CurrencyElement extends Polymer.Element {
+
+      static get is() { return 'currency-element'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+          data: {
+            type: Object,
+          	notify:true,
+          }
+        }
+      }
+
+      // Add methods to the element's public API
+      
+      
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(CurrencyElement.is, CurrencyElement);
+  </script>
+
+</dom-module>

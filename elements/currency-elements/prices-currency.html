@@ -1,0 +1,286 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
+
+<link rel="import" href="currency-element.html">
+    
+<dom-module id="prices-currency">
+  <!-- Optional shadow DOM template -->
+  <template>
+    <style>
+      .grid{
+      	display: grid;
+      	grid-template-columns: repeat(4, 1fr);
+      }
+
+      .titles{
+        color:var(--accent-color);
+        border: 1px solid var(--accent-color);
+        font-size: .8rem;
+        text-align: center;
+
+      }
+      .item{
+        font-size: .8rem;
+        text-align: center;
+      }
+
+      paper-tab{
+        font-family: "Averta","Avenir W02","Avenir",Helvetica,Arial,sans-serif;font-size: 1rem;
+        --paper-tab-ink:var(--accent-color);                   
+      }
+
+      paper-tabs{     
+        --paper-tabs-selection-bar-color:var(--accent-color);
+        --paper-tabs-selection-bar:{
+          color:red;
+        }
+        --paper-tabs:{     
+          margin-top: 1px
+        }
+      }
+
+
+
+    </style>
+
+    <currency-element data="{{change}}"></currency-element>
+  
+
+    <paper-tabs align-bottom selected="{{selected}}" attr-for-selected="name">
+       <paper-tab name="jeri">Jericoacoara</paper-tab>
+       <paper-tab name="rio">Rio de Janeiro</paper-tab>
+    </paper-tabs>
+
+    <iron-pages
+       selected="[[selected]]"
+       attr-for-selected="name"
+       role="main">
+       <div name="jeri">
+			<div class="grid">
+				<template is="dom-repeat" items="{{titles}}" as="titles">
+					<div class="titles">[[titles]]</div>
+				</template>
+				<template is="dom-repeat" items="{{lagosteiro}}" as="lagosteiro">
+					<div class="item">[[lagosteiro]]</div>
+				</template>
+				<template is="dom-repeat" items="{{saborDaTerra}}" as="saborDaTerra">
+					<div class="item">[[saborDaTerra]]</div>
+				</template>
+				<template is="dom-repeat" items="{{alchymist}}" as="alchymist">
+					<div class="item">[[alchymist]]</div>
+				</template>
+        <template is="dom-repeat" items="{{alchymist1}}" as="alchymist1">
+          <div class="item">[[alchymist1]]</div>
+        </template>
+         <template is="dom-repeat" items="{{eat}}" as="eat">
+          <div class="item">[[eat]]</div>
+        </template>
+				<template is="dom-repeat" items="{{naturalmente}}" as="naturalmente">
+					<div class="item">[[naturalmente]]</div>
+				</template>
+				<template is="dom-repeat" items="{{naturalmente1}}" as="naturalmente1">
+					<div class="item">[[naturalmente1]]</div>
+				</template>
+			</div>
+       </div>
+       <div name="rio">
+          <div class="grid">
+        <template is="dom-repeat" items="{{titles}}" as="titles">
+          <div class="titles">[[titles]]</div>
+        </template>
+        <template is="dom-repeat" items="{{astor}}" as="astor">
+          <div class="item">[[astor]]</div>
+        </template>
+        <template is="dom-repeat" items="{{barthodomeu}}" as="barthodomeu">
+          <div class="item">[[barthodomeu]]</div>
+        </template>
+        <template is="dom-repeat" items="{{canastra}}" as="canastra">
+          <div class="item">[[canastra]]</div>
+        </template>
+        <template is="dom-repeat" items="{{canastra1}}" as="canastra1">
+          <div class="item">[[canastra1]]</div>
+        </template>
+         <template is="dom-repeat" items="{{emporio}}" as="emporio">
+          <div class="item">[[emporio]]</div>
+        </template>
+        <template is="dom-repeat" items="{{cafeCompany}}" as="cafeCompany">
+          <div class="item">[[cafeCompany]]</div>
+        </template>
+        <template is="dom-repeat" items="{{carretao}}" as="carretao">
+          <div class="item">[[carretao]]</div>
+        </template>
+
+      </div>
+       </div>
+    </iron-pages>
+
+  </template>
+
+  <script>
+
+    // Define the element's API using an ES2015 class
+    class PricesCurrency extends Polymer.Element {
+
+      static get is() { return 'prices-currency'; }
+
+      // Declare properties for the element's public API         
+      static get properties() {
+        return {
+          selected: {
+            type: String,
+            value: "jeri"
+          },
+          change:Object,
+          titles:{
+          	type:Array,
+          	value(){
+          		return ['Bar','Item','BRL', 'EUR']
+          	}
+          },
+
+          lagosteiro:{
+          	type:Array,
+          	value(){
+          		return ['Lagosteiro','Langosta','119']
+          	}
+          },
+
+           saborDaTerra:{
+          	type:Array,
+          	value(){
+          		return ['Da Terra','Langosta','90']
+          	}
+          },
+
+           alchymist:{
+          	type:Array,
+          	value(){
+          		return ['Alchymist','Caipirinha','17']
+          	}
+          },
+
+          alchymist1:{
+            type:Array,
+            value(){
+              return ['Alchymist','Heineken','10']
+            }
+          },
+
+           eat:{
+            type:Array,
+            value(){
+              return ['Eat','Heineken','9']
+            }
+          },
+
+          naturalmente:{
+          	type:Array,
+          	value(){
+          		return ['Naturalm','Caipirinha','14']
+          	}
+          },
+
+           naturalmente1:{
+          	type:Array,
+          	value(){
+          		return ['Naturalm','Café','6']
+          	}
+          },
+
+           astor:{
+            type:Array,
+            value(){
+              return ['Astor','Gintonic','26']
+            }
+          },
+
+          barthodomeu:{
+            type:Array,
+            value(){
+              return ['Barthodom','Budweiser','8.50']
+            }
+          },
+
+           canastra:{
+            type:Array,
+            value(){
+              return ['Canastra','Caipirinha','10']
+            }
+          },
+
+          canastra1:{
+            type:Array,
+            value(){
+              return ['Canastra','Pulpo','26']
+            }
+          },
+
+          emporio:{
+            type:Array,
+            value(){
+              return ['Empório 37','Heineken','12']
+            }
+          },
+
+           cafeCompany:{
+            type:Array,
+            value(){
+              return ['Café & Co','café','3.50']
+            }
+          },
+
+          carretao:{
+            type:Array,
+            value(){
+              return ['Carretao','rodizio carne','90']
+            }
+          },
+
+          priceEur:{
+          	type:Number,
+          	computed:'changeApply(change)'
+          }
+
+        }
+      }
+
+      // Add methods to the element's public API
+      changeApply(change) {
+      	let lagChanged = (this.lagosteiro[2] / change.rates.BRL).toFixed(2);
+        this.push('lagosteiro',lagChanged);
+      	let sabChanged = (this.saborDaTerra[2] / change.rates.BRL).toFixed(2);
+      	this.push('saborDaTerra',sabChanged);
+      	let alchChanged = (this.alchymist[2] / change.rates.BRL).toFixed(2);
+      	this.push('alchymist',alchChanged);
+        let alch1Changed = (this.alchymist1[2] / change.rates.BRL).toFixed(2);
+        this.push('alchymist1',alch1Changed);
+      	let natChanged = (this.naturalmente[2] / change.rates.BRL).toFixed(2);
+      	this.push('naturalmente',natChanged);
+      	let nat1Changed = (this.naturalmente1[2] / change.rates.BRL).toFixed(2);
+      	this.push('naturalmente1',nat1Changed);
+        let eat = (this.eat[2] / change.rates.BRL).toFixed(2);
+        this.push('eat',eat);
+        let astor = (this.astor[2] / change.rates.BRL).toFixed(2);
+        this.push('astor',astor);
+        let barthodomeu = (this.barthodomeu[2] / change.rates.BRL).toFixed(2);
+        this.push('barthodomeu',barthodomeu);
+        let canastra = (this.canastra[2] / change.rates.BRL).toFixed(2);
+        this.push('canastra',canastra);
+        let canastra1 = (this.canastra1[2] / change.rates.BRL).toFixed(2);
+        this.push('canastra1',canastra1);
+        let emporio = (this.emporio[2] / change.rates.BRL).toFixed(2);
+        this.push('emporio',emporio);
+        let cafeCompany = (this.cafeCompany[2] / change.rates.BRL).toFixed(2);
+        this.push('cafeCompany',cafeCompany);
+        let carretao = (this.carretao[2] / change.rates.BRL).toFixed(2);
+        this.push('carretao',carretao);
+      }
+
+    }
+
+    // Register the x-custom element with the browser
+    customElements.define(PricesCurrency.is, PricesCurrency);
+  </script>
+
+</dom-module>
