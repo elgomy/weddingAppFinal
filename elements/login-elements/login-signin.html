@@ -23,7 +23,9 @@
         type="email"
         required        
         error-message="Invalid email"
-        value="{{user.email}}">
+        value="{{user.email}}"
+        autofocus
+        on-keypress="_keyPressed">
       </paper-input>
 
       <paper-input 
@@ -34,11 +36,12 @@
         minlength="6"
         required       
         error-message="Invalid password"
-        value="{{user.password}}">
+        value="{{user.password}}"
+        on-keypress="_keyPressed">
       </paper-input>
    </div>
 
-    <paper-button id="signButton" raised on-tap="signEmail">Entrar</paper-button> 
+    <paper-button id="signButton" raised on-tap="signEmail" focused>Entrar</paper-button> 
  
   </template>
 
@@ -96,6 +99,13 @@
         }
       }
 
+      _keyPressed(event) {
+        if (event.which == 13 || event.keyCode == 13) {
+          this.signEmail();
+          return false;
+        }
+        return true;
+      }
 
     }
 
