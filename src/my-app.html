@@ -71,7 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     /* Body background image with duotone effect */
       app-header-layout{
-        background: url('../images/background-image2.jpg') no-repeat center center fixed;
+        background: url('../images/background-image2_opt.jpg') no-repeat center center fixed;
         background-size: cover;
         width: 100%;
         height: 100%;
@@ -113,7 +113,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       /* Added styles */
 
       /* Login styles */
-
 
       .account-icon{
         --iron-icon-width:35px;     
@@ -269,19 +268,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 30px;
       }
 
+      /* apply scroll to left drawer */
       .drawer__container{
         height: 100%;
         overflow: auto;
       }
       
-
-    /* set hidden to display:none to optimize hidden$ atribute rendering */;
+      /* set hidden to display:none to optimize hidden$ atribute rendering */;
       [hidden]{
         display: none;
       }
          
       /* Media query . Here include styles for bigger screens (mobile first) */
       @media (min-width: 640px){
+          app-header-layout{
+        background: url('../images/background-image2.jpg') no-repeat center center fixed;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+      }
 
         :host{
            --app-drawer-width:37%;
@@ -311,7 +316,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         paper-tab{
          font-family: 'Montserrat', 'Noto', sans-serif;
         }
-
 
         .drawer__login-grid{
           display: grid;
@@ -422,7 +426,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <app-drawer id="drawer" slot="drawer" no-focus-trap>
         <app-toolbar>
           <div class="spacer" spacer></div>
-          <iron-image class="logo" src="../images/logo1.png"></iron-image> 
+          <iron-image class="logo" src="../images/logo.png"></iron-image> 
         </app-toolbar>
         <!-- //////////////// Drawer container ///////////// -->
         <div class="drawer__container">
@@ -451,7 +455,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                       <day-countdown language="[[language]]"></day-countdown>  
                   </div>  
                   <div class="confirm-button__wrapper">
-                      <paper-button raised on-tap="confirm">Vamos!</paper-button>
+                      <paper-button raised on-click="confirm">Confirmar</paper-button>
                   </div> 
                 </template>
               
@@ -541,7 +545,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-dialog modal id="dialogAuthentic" class="login-dialog">  
       <h2 class="login-dialog__header">
         <span>Te esperamos</span> 
-        <iron-icon icon="my-icons:close" on-tap="dialogClose"></iron-icon> 
+        <iron-icon icon="my-icons:close" on-click="dialogClose"></iron-icon> 
       </h2>
       <div class="login-dialog__admin">
         <login-admin></login-admin>
@@ -559,8 +563,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-dialog> 
 
      <!--toast -->
-    <paper-toast id="positiveToast" class="positiveToast" duration="4000"></paper-toast>
-    <paper-toast id="negativeToast" class="negativeToast" duration="4000"></paper-toast>
+    <paper-toast id="positiveToast" class="positiveToast" duration="3000"></paper-toast>
+    <paper-toast id="negativeToast" class="negativeToast" duration="3000"></paper-toast>
 
      <!--Initialize Firebase -->
     <firebase-app 
@@ -584,7 +588,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <firebase-document               
         app-name="wedding-app"
-        path="/users/{{user.uid}}" 
+        path="/users/[[user.uid]]" 
         data="{{userProfile}}">
     </firebase-document>
 
@@ -689,25 +693,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.addEventListener('positiveToast', e => this._openPositiveToast(e));
           this.addEventListener('negativeToast', e => this._openNegativeToast(e));
           this.addEventListener('closeLogin', e => this.dialogClose(e));
-          this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account> 
-          this._setLanguage();      
-      }
-
-      _setLanguage(){
-          let language = window.navigator.language||navigator.browserLanguage;
-          let ln = language.substring(0,2);
-
-          if(ln == 'pt'  || ln == 'pt-BR'){
-            this.$.switch.checked = true;
-          } else {
-            this.$.switch.checked = false;
-          }
+          this.addEventListener('delete-user', e => this.removeUser(e)); // <delete-account>      
       }
 
       _toggle() {
           this.language = this.$.switch.checked ? 'pt' : 'es';
       }
-
 
        /**
           * we need to include Toast in <my-app> component in order to show it correctly
@@ -767,9 +758,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.$.dialogCeleb.close()
           }, 5000);
           this.set('task.confirm',true)
-      }
-
-    
+      }  
 
     }
 
